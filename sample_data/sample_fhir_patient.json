@@ -1,0 +1,22 @@
+{
+  "resourceType": "Patient",
+  "id": "example-patient-001",
+  "active": true,
+  "name": [
+    {
+      "use": "official",
+      "family": "Smith",
+      "given": ["Jane", "Alice"]
+    }
+  ],
+  "gender": "female",
+  "birthDate": "1985-04-12",
+  "address": [
+    {
+      "line": ["123 Healthcare Way"],
+      "city": "Boston",
+      "state": "MA",
+      "postalCode": "02115"
+    }
+  ]
+}
