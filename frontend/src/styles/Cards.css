@@ -1,0 +1,162 @@
+.stat-card{
+
+    width:250px;
+
+    background:
+
+    rgba(15,45,66,0.9);
+
+
+    padding:25px;
+
+    border-radius:15px;
+
+    border:1px solid #075985;
+
+    box-shadow:0 5px 20px rgba(0,0,0,0.3);
+
+
+    transition:0.3s;
+
+}
+
+
+.stat-card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+
+
+.stat-card h3{
+
+    color:#bae6fd;
+
+}
+
+
+
+.stat-card h1{
+
+    margin:15px 0;
+
+    font-size:35px;
+
+    color:#38bdf8;
+
+}
+
+
+
+.stat-card p{
+
+    color:#cbd5e1;
+
+}
+
+
+
+
+
+.patient-card{
+
+
+    background:
+
+    rgba(8,34,53,0.95);
+
+
+    padding:30px;
+
+    border-radius:20px;
+
+    border:1px solid #075985;
+
+}
+
+
+
+.patient-card h2{
+
+    color:#38bdf8;
+
+    margin-bottom:20px;
+
+}
+
+
+
+
+.patient-grid{
+
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:20px;
+
+}
+
+
+
+.patient-grid div{
+
+
+    background:#061522;
+
+    padding:20px;
+
+    border-radius:12px;
+
+}
+
+
+
+.patient-grid h3{
+
+    color:#7dd3fc;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.actions{
+
+    margin-top:25px;
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+.actions button{
+
+    background:#0284c7;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+
+.actions button:hover{
+
+    background:#0369a1;
+
+}

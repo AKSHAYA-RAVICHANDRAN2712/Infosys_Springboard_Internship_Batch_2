@@ -1,0 +1,177 @@
+.health-page{
+
+    min-height:100vh;
+    padding:40px;
+    background:#f1f8ff;
+    font-family:Arial, sans-serif;
+
+}
+
+
+.health-page h1{
+
+    color:#0645ad;
+    text-align:center;
+    margin-bottom:20px;
+
+}
+
+
+.intro{
+
+    text-align:center;
+    font-size:18px;
+    margin-bottom:30px;
+    color:#555;
+
+}
+
+
+.health-card{
+
+    background:white;
+    padding:30px;
+    margin:25px auto;
+    border-radius:15px;
+    max-width:1000px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.12);
+
+}
+
+
+
+.health-card h2{
+
+    color:#087f5b;
+
+}
+
+
+
+.score-circle{
+
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background:#20c997;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:35px;
+    font-weight:bold;
+    margin:20px auto;
+
+}
+
+
+
+.status-list div{
+
+    display:flex;
+    justify-content:space-between;
+    padding:15px;
+    margin:10px;
+    background:#eef7ff;
+    border-radius:10px;
+
+}
+
+
+.status-list b{
+
+    color:green;
+
+}
+
+
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+
+}
+
+
+
+th{
+
+    background:#0645ad;
+    color:white;
+
+}
+
+
+th,td{
+
+    padding:15px;
+    border:1px solid #ddd;
+    text-align:center;
+
+}
+
+
+
+.safe{
+
+    color:green;
+    font-weight:bold;
+
+}
+
+
+
+.role-grid{
+
+    display:flex;
+    gap:30px;
+    justify-content:center;
+
+}
+
+
+
+.role-card{
+
+    background:white;
+    padding:30px;
+    width:40%;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.12);
+
+}
+
+
+
+.role-card h2{
+
+    color:#0645ad;
+
+}
+
+
+
+li{
+
+    margin:10px 0;
+
+}
+
+
+@media(max-width:768px){
+
+    .role-grid{
+
+        flex-direction:column;
+
+    }
+
+
+    .role-card{
+
+        width:auto;
+
+    }
+
+}
