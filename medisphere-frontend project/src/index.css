@@ -1,0 +1,276 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+/* =====================================================================
+   MediSphere design system
+   Display  : Space Grotesk  — brand wordmark, page titles, signature
+   Body/UI  : Inter          — everything you read
+   Data     : IBM Plex Mono  — numbers, stats, IDs, timestamps
+   Signature: hairline heartbeat-pulse motif + mono "readout" stat cards
+   ===================================================================== */
+:root {
+  --ink: #16232b;
+  --ink-soft: #4c5b63;
+  --teal-950: #0a3a36;
+  --teal-800: #0e5750;
+  --teal-600: #147a6d;
+  --teal-500: #1c9184;
+  --mint-100: #e9f4f1;
+  --mint-050: #f3f8f6;
+  --paper: #faf9f6;
+  --line: #e4e7e5;
+  --coral: #d95c4f;
+  --coral-100: #fbeae7;
+  --amber: #c98a2e;
+  --amber-100: #faf0dc;
+  --radius: 12px;
+
+  --bs-primary: var(--teal-600);
+  --bs-body-bg: var(--paper);
+  --bs-body-font-family: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  background: var(--paper);
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--ink);
+}
+
+h1, h2, h3, h4, h5, .brand-font {
+  font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.font-mono, .ms-mono {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+/* Buttons / links use teal, never Bootstrap's default blue */
+.btn-primary {
+  background-color: var(--teal-600);
+  border-color: var(--teal-600);
+  font-weight: 500;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--teal-800);
+  border-color: var(--teal-800);
+}
+.btn-outline-primary {
+  color: var(--teal-600);
+  border-color: var(--teal-600);
+}
+.btn-outline-primary:hover {
+  background-color: var(--teal-600);
+  border-color: var(--teal-600);
+}
+.btn, .form-control, .form-select {
+  border-radius: 9px;
+}
+.text-primary { color: var(--teal-600) !important; }
+a { color: var(--teal-700, var(--teal-600)); text-decoration-thickness: 1px; }
+
+.form-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--teal-500);
+  box-shadow: 0 0 0 0.2rem rgba(28, 145, 132, 0.15);
+}
+
+/* ---------------------------------------------------------------------
+   App shell
+--------------------------------------------------------------------- */
+.ms-app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.ms-sidebar {
+  width: 258px;
+  flex-shrink: 0;
+  background: linear-gradient(185deg, var(--teal-950), #0a2e2b 78%);
+  color: #fff;
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+}
+.ms-sidebar .brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+}
+.ms-sidebar .nav-section-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: rgba(255,255,255,0.4);
+  padding: 0 0.6rem;
+  margin: 1.1rem 0 0.5rem;
+}
+.ms-sidebar .nav-link {
+  color: rgba(255,255,255,0.72);
+  border-radius: 9px;
+  padding: 0.55rem 0.8rem;
+  margin-bottom: 2px;
+  font-size: 0.9rem;
+  font-weight: 450;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.ms-sidebar .nav-link i {
+  font-size: 0.95rem;
+  width: 18px;
+  text-align: center;
+  opacity: 0.85;
+}
+.ms-sidebar .nav-link:hover {
+  background: rgba(255,255,255,0.07);
+  color: #fff;
+}
+.ms-sidebar .nav-link.active {
+  background: var(--teal-500);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+}
+
+/* hairline pulse-line etched at the base of the sidebar — the recurring
+   brand signature, echoing the heart-pulse mark */
+.ms-sidebar-pulse {
+  margin-top: auto;
+  padding: 1rem 1.1rem 1.3rem;
+  opacity: 0.55;
+}
+.ms-sidebar-pulse svg { width: 100%; height: 22px; display: block; }
+.ms-sidebar-pulse .label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.04em;
+  margin-top: 0.4rem;
+}
+
+.ms-main { flex: 1; min-width: 0; }
+
+.ms-topbar {
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+}
+
+/* ---------------------------------------------------------------------
+   Cards & the signature "vitals readout" stat tile
+--------------------------------------------------------------------- */
+.ms-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.ms-stat-card {
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--tint, var(--teal-500));
+  background: #fff;
+  padding: 1.05rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.ms-stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+.ms-stat-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.55rem;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.ms-stat-label {
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+/* ---------------------------------------------------------------------
+   Status badges — a small "indicator light" rather than a solid pill
+--------------------------------------------------------------------- */
+.ms-badge-status {
+  font-weight: 500;
+  font-size: 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  color: var(--ink-soft);
+}
+.ms-badge-status .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* ---------------------------------------------------------------------
+   Tables
+--------------------------------------------------------------------- */
+.ms-table thead th {
+  font-size: 0.72rem;
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  border-bottom-width: 1px;
+  font-weight: 500;
+}
+.ms-table td { font-size: 0.92rem; }
+.ms-table .ms-mono-cell {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------------------
+   Auth screens
+--------------------------------------------------------------------- */
+.auth-split { min-height: 100vh; }
+.auth-visual {
+  background: radial-gradient(circle at 15% 20%, rgba(255,255,255,0.06), transparent 45%),
+              linear-gradient(165deg, var(--teal-950), #0a2e2b 85%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.auth-visual .pulse-line { position: absolute; left: 0; right: 0; bottom: 14%; opacity: 0.5; }
+.auth-visual .pulse-line svg { width: 130%; height: 90px; }
+
+.auth-badge-row {
+  display: flex;
+  gap: 2.25rem;
+}
+.auth-badge-row .num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .ms-sidebar { position: fixed; z-index: 1040; transform: translateX(-100%); transition: transform .2s ease; }
+  .ms-sidebar.open { transform: translateX(0); }
+}
+
+@keyframes ms-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(28, 145, 132, 0.5); }
+  70%  { box-shadow: 0 0 0 6px rgba(28, 145, 132, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(28, 145, 132, 0); }
+}
