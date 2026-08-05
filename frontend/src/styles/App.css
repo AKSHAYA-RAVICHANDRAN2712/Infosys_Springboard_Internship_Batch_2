@@ -1,0 +1,32 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+body{
+
+    font-family:'Segoe UI', Arial, sans-serif;
+
+    background:#061522;
+
+    color:white;
+
+}
+
+
+a{
+
+    text-decoration:none;
+
+    color:white;
+
+}
+
+
+button{
+
+    font-family:inherit;
+
+}

@@ -1,0 +1,99 @@
+/* .page-container{
+
+    min-height:100vh;
+    padding:40px;
+    background:#f4f9ff;
+
+}
+
+
+h1{
+
+    color:#0b5ed7;
+    margin-bottom:30px;
+
+}
+
+
+.info-card{
+
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+
+}
+
+
+.progress{
+
+    width:100%;
+    background:#ddd;
+    height:30px;
+    border-radius:20px;
+    overflow:hidden;
+
+}
+
+
+.progress-bar{
+
+    width:96%;
+    height:100%;
+    background:#28a745;
+    color:white;
+    text-align:center;
+    padding-top:5px;
+
+}
+
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+
+}
+
+
+th,td{
+
+    padding:15px;
+    border:1px solid #ddd;
+    text-align:center;
+
+}
+
+
+.normal{
+
+    color:green;
+    font-weight:bold;
+
+}
+
+
+.role-container{
+
+    display:flex;
+    gap:30px;
+
+}
+
+
+.role-card{
+
+    flex:1;
+    padding:20px;
+    background:#eef6ff;
+    border-radius:12px;
+
+}
+
+
+.role-card h3{
+
+    color:#0b5ed7;
+
+} */

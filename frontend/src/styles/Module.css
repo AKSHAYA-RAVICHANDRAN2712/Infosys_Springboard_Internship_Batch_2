@@ -1,0 +1,101 @@
+.module-card{
+
+    background:#082235;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    border:1px solid #0284c7;
+
+    margin:20px 0;
+
+}
+
+
+.module-card h2{
+
+    color:#38bdf8;
+
+    margin-bottom:20px;
+
+}
+
+
+.progress{
+
+    height:25px;
+
+    background:#061522;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin-bottom:15px;
+
+}
+
+
+.progress-bar{
+
+    width:97%;
+
+    height:100%;
+
+    background:#22c55e;
+
+    text-align:center;
+
+    padding:3px;
+
+    color:white;
+
+    font-weight:bold;
+
+}
+
+
+
+.vital-item{
+
+    background:#061522;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    margin:10px 0;
+
+}
+
+
+
+.success{
+
+    color:#22c55e;
+
+    font-weight:bold;
+
+}
+
+
+
+.role{
+
+    background:#061522;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    margin-bottom:15px;
+
+}
+
+
+.role h3{
+
+    color:#7dd3fc;
+
+}
