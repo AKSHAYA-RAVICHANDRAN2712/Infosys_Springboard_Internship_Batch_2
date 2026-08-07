@@ -7,6 +7,7 @@ import ProtectedRoute from './components/common/ProtectedRoute'
 
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
+import Landing from './pages/Landing'
 import NotFound from './pages/NotFound'
 import Patient360 from './pages/patients/Patient360'
 import ConsentManagement from './pages/consent/ConsentManagement'
@@ -20,6 +21,10 @@ import ReceptionistDashboard from './pages/dashboard/ReceptionistDashboard'
 
 import PatientsPage from './pages/patients/PatientsPage'
 import AppointmentsPage from './pages/appointments/AppointmentsPage'
+import PredictionsPage from './pages/predictions/PredictionsPage'
+import AlertsPage from './pages/alerts/AlertsPage'
+import CareplansPage from './pages/careplans/CareplansPage'
+import ReportsPage from './pages/reports/ReportsPage'
 
 export default function App() {
   const { user, loading } = useAuth()
@@ -28,7 +33,7 @@ export default function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to={user ? roleHome(user.role) : '/login'} replace />} />
+      <Route path="/" element={user ? <Navigate to={roleHome(user.role)} replace /> : <Landing />} />
       <Route path="/login" element={user ? <Navigate to={roleHome(user.role)} replace /> : <Login />} />
       <Route path="/register" element={user ? <Navigate to={roleHome(user.role)} replace /> : <Register />} />
 
@@ -58,6 +63,18 @@ export default function App() {
       <Route path="/admin/appointments" element={
         <ProtectedRoute allowedRoles={[ROLES.ADMIN]}><AppointmentsPage /></ProtectedRoute>
       } />
+      <Route path="/admin/predictions" element={
+        <ProtectedRoute allowedRoles={[ROLES.ADMIN]}><PredictionsPage /></ProtectedRoute>
+      } />
+      <Route path="/admin/alerts" element={
+        <ProtectedRoute allowedRoles={[ROLES.ADMIN]}><AlertsPage /></ProtectedRoute>
+      } />
+      <Route path="/admin/careplans" element={
+        <ProtectedRoute allowedRoles={[ROLES.ADMIN]}><CareplansPage /></ProtectedRoute>
+      } />
+      <Route path="/admin/reports" element={
+        <ProtectedRoute allowedRoles={[ROLES.ADMIN]}><ReportsPage /></ProtectedRoute>
+      } />
       <Route path="/consent/verify" element={
   <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]}>
     <ConsentVerification />
@@ -73,6 +90,18 @@ export default function App() {
       } />
       <Route path="/doctor/appointments" element={
         <ProtectedRoute allowedRoles={[ROLES.DOCTOR]}><AppointmentsPage /></ProtectedRoute>
+      } />
+      <Route path="/doctor/predictions" element={
+        <ProtectedRoute allowedRoles={[ROLES.DOCTOR]}><PredictionsPage /></ProtectedRoute>
+      } />
+      <Route path="/doctor/alerts" element={
+        <ProtectedRoute allowedRoles={[ROLES.DOCTOR]}><AlertsPage /></ProtectedRoute>
+      } />
+      <Route path="/doctor/careplans" element={
+        <ProtectedRoute allowedRoles={[ROLES.DOCTOR]}><CareplansPage /></ProtectedRoute>
+      } />
+      <Route path="/doctor/reports" element={
+        <ProtectedRoute allowedRoles={[ROLES.DOCTOR]}><ReportsPage /></ProtectedRoute>
       } />
 
       {/* Patient */}
@@ -92,6 +121,18 @@ export default function App() {
       } />
       <Route path="/receptionist/appointments" element={
         <ProtectedRoute allowedRoles={[ROLES.RECEPTIONIST]}><AppointmentsPage /></ProtectedRoute>
+      } />
+      <Route path="/receptionist/predictions" element={
+        <ProtectedRoute allowedRoles={[ROLES.RECEPTIONIST]}><PredictionsPage /></ProtectedRoute>
+      } />
+      <Route path="/receptionist/alerts" element={
+        <ProtectedRoute allowedRoles={[ROLES.RECEPTIONIST]}><AlertsPage /></ProtectedRoute>
+      } />
+      <Route path="/receptionist/careplans" element={
+        <ProtectedRoute allowedRoles={[ROLES.RECEPTIONIST]}><CareplansPage /></ProtectedRoute>
+      } />
+      <Route path="/receptionist/reports" element={
+        <ProtectedRoute allowedRoles={[ROLES.RECEPTIONIST]}><ReportsPage /></ProtectedRoute>
       } />
 
       <Route path="*" element={<NotFound />} />

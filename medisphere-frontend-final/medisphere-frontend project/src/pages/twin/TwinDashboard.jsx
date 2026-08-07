@@ -1,23 +1,15 @@
 // src/pages/twin/TwinDashboard.jsx
 //
-// A standalone "Milestone 1: FHIR Integration & Twin Foundation" screen,
-// visually matching the reference screenshot (dark navy theme — deliberately
-// different from the rest of MediSphere's light teal theme, since this is
-// presented as its own milestone/module).
+// "Milestone 1: FHIR Integration & Twin Foundation" screen.
+// Color scheme matches the reference screenshot exactly:
+//   - Dark navy sidebar
+//   - Solid blue topbar
+//   - Light/white main content area
+//   - White stat cards with a thin border
+//   - The "Digital Health Twin" panel stays dark navy (the one accent block)
 //
-// Real data notes for anyone asking "how does this actually work":
-//   - FHIR = a real healthcare data-exchange standard (how systems like
-//     Epic share patient records). Loading a "FHIR Patient Resource" here
-//     is mocked; in production this is a backend integration.
-//   - "Digital Health Twin" = marketing term for "all of a patient's data
-//     combined into one live view" — same idea as Patient 360.
-//   - Vitals Stream reuses the same simulated live feed as VitalsMonitor.
-//   - "Run Prediction" and "Create Careplan" are mocked outputs — no real
-//     ML model runs here; this is a convincing UI stand-in.
-//
-// This file is self-contained (its own scoped dark styling via the
-// <style> block below) so it doesn't fight with the app's global teal
-// theme in src/index.css.
+// Reuses the same live vitals feed as VitalsMonitor.jsx — no new service
+// file needed.
 
 import React, { useEffect, useState } from 'react'
 import { subscribeToVitals } from '../../api/vitalsService'
@@ -69,20 +61,20 @@ export default function TwinDashboard() {
         .twin360-shell {
           display: flex;
           min-height: 100vh;
-          background: #0a0f1c;
-          color: #e7ecf5;
+          background: #f4f6fb;
+          color: #1c2540;
           font-family: 'Inter', system-ui, sans-serif;
         }
         .twin360-sidebar {
           width: 200px;
           flex-shrink: 0;
           background: #0d1424;
-          border-right: 1px solid #1c2540;
           padding: 1.25rem 0.9rem;
         }
         .twin360-brand {
           font-weight: 700;
           font-size: 1.05rem;
+          color: #ffffff;
           margin-bottom: 1.5rem;
           padding: 0 0.4rem;
         }
@@ -103,14 +95,16 @@ export default function TwinDashboard() {
         }
         .twin360-main { flex: 1; min-width: 0; }
         .twin360-topbar {
-          background: linear-gradient(90deg, #1a3faa, #2f6fed);
+          background: #2f6fed;
           padding: 0.9rem 1.5rem;
           display: flex;
           justify-content: space-between;
           align-items: center;
           font-size: 0.95rem;
+          color: #ffffff;
         }
         .twin360-body { padding: 1.5rem; }
+        .twin360-heading { color: #12172a; font-weight: 700; }
         .twin360-stat-grid {
           display: grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -118,24 +112,28 @@ export default function TwinDashboard() {
           margin-bottom: 1.25rem;
         }
         .twin360-stat-card {
-          background: #101a30;
-          border: 1px solid #1c2540;
+          background: #ffffff;
+          border: 1px solid #e2e6f0;
           border-radius: 10px;
           padding: 1rem 1.1rem;
         }
-        .twin360-stat-label { font-size: 0.75rem; color: #8a94ad; }
+        .twin360-stat-label { font-size: 0.75rem; color: #7c8494; }
         .twin360-stat-value {
           font-family: 'IBM Plex Mono', monospace;
           font-size: 1.5rem;
           font-weight: 600;
           margin: 0.2rem 0;
+          color: #12172a;
         }
-        .twin360-stat-sub { font-size: 0.72rem; color: #6fa8ff; }
+        .twin360-stat-sub { font-size: 0.72rem; color: #2f6fed; }
+
+        /* This card intentionally stays dark navy — the one accent block */
         .twin360-card {
-          background: #101a30;
+          background: #0d1424;
           border: 1px solid #1c2540;
           border-radius: 10px;
           padding: 1.4rem;
+          color: #e7ecf5;
         }
         .twin360-card h6 { color: #cdd6ea; font-weight: 600; margin-bottom: 1rem; }
         .twin360-row { font-size: 0.88rem; margin-bottom: 0.65rem; color: #c4cce0; }
@@ -163,7 +161,7 @@ export default function TwinDashboard() {
         .twin360-btn:hover { background: #1e447a; }
         .twin360-panel {
           margin-top: 1rem;
-          background: #0d1830;
+          background: #101a30;
           border: 1px solid #1c2540;
           border-radius: 10px;
           padding: 1rem 1.2rem;
@@ -195,7 +193,7 @@ export default function TwinDashboard() {
         </div>
 
         <div className="twin360-body">
-          <h4 className="mb-3" style={{ fontWeight: 700 }}>Patient 360 Dashboard</h4>
+          <h4 className="twin360-heading mb-3">Patient 360 Dashboard</h4>
 
           {/* Stat cards */}
           <div className="twin360-stat-grid">
@@ -216,7 +214,7 @@ export default function TwinDashboard() {
             </div>
           </div>
 
-          {/* Digital Health Twin card */}
+          {/* Digital Health Twin card — stays dark navy */}
           <div className="twin360-card">
             <h6>Digital Health Twin — Patient John Doe</h6>
             <div className="twin360-row"><b>FHIR Patient Resource:</b> Loaded from Epic EHR</div>
@@ -249,7 +247,7 @@ export default function TwinDashboard() {
                 <h6>Patient Timeline</h6>
                 {TIMELINE_EVENTS.map((t, i) => (
                   <div key={i} className="twin360-row">
-                    <span className="ms-mono-cell" style={{ color: '#6fa8ff' }}>{t.date}</span> — {t.event}
+                    <span style={{ color: '#6fa8ff' }}>{t.date}</span> — {t.event}
                   </div>
                 ))}
               </div>

@@ -16,6 +16,7 @@ import { useParams, Link } from 'react-router-dom'
 import { mockPatients, mockAppointments } from '../../data/mockData'
 import { mockAllergies, mockPrescriptions } from '../../data/patient360Data'
 import VitalsMonitor from '../../components/vitals/VitalsMonitor'
+import DashboardLayout from '../../components/layout/DashboardLayout'
 
 export default function Patient360() {
   const { id } = useParams()
@@ -26,7 +27,7 @@ export default function Patient360() {
   const prescriptions = mockPrescriptions[patient.id] || []
 
   return (
-    <div>
+    <DashboardLayout title="Patient 360">
       <Link to="/doctor/patients" className="text-decoration-none" style={{ fontSize: '0.85rem' }}>
         <i className="bi bi-arrow-left me-1" /> Back to patients
       </Link>
@@ -117,6 +118,6 @@ export default function Patient360() {
           </div>
         </div>
       </div>
-    </div>
+    </DashboardLayout>
   )
 }

@@ -1,3 +1,10 @@
+// src/components/layout/Topbar.jsx
+//
+// Recolored to a solid blue bar with white text, matching the reference
+// screenshot exactly. Same functionality as before (mobile sidebar
+// toggle, page title, role label, avatar dropdown with logout) — only
+// the colors and centering changed.
+
 import React from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { ROLE_LABELS } from '../../utils/roles'
@@ -21,22 +28,29 @@ export default function Topbar({ title, onToggleSidebar }) {
 
   return (
     <header className="ms-topbar d-flex align-items-center justify-content-between px-3 px-md-4 py-3">
-      <div className="d-flex align-items-center gap-2">
+      <div className="d-flex align-items-center gap-2" style={{ minWidth: 40 }}>
         <button className="btn btn-sm btn-light d-md-none" onClick={onToggleSidebar}>
           <i className="bi bi-list"></i>
         </button>
-        <h4 className="brand-font mb-0">{title}</h4>
       </div>
+
+      <h4 className="brand-font mb-0 flex-grow-1 text-center text-truncate px-2" style={{ color: '#fff' }}>
+        {title}
+      </h4>
+
       <div className="d-flex align-items-center gap-3">
-        <span className="text-muted small d-none d-sm-inline">{ROLE_LABELS[user?.role]}</span>
+        <span className="small d-none d-sm-inline" style={{ color: 'rgba(255,255,255,0.8)' }}>
+          {ROLE_LABELS[user?.role]}
+        </span>
         <div className="dropdown">
           <button
-            className="btn btn-light d-flex align-items-center gap-2 rounded-pill px-2 py-1"
+            className="btn d-flex align-items-center gap-2 rounded-pill px-2 py-1"
             data-bs-toggle="dropdown"
+            style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.3)' }}
           >
             <span
               className="rounded-circle d-flex align-items-center justify-content-center fw-semibold"
-              style={{ width: 34, height: 34, background: '#1c9184', color: '#fff', fontSize: '0.8rem' }}
+              style={{ width: 34, height: 34, background: 'var(--teal-950)', color: '#fff', fontSize: '0.8rem' }}
             >
               {initials}
             </span>

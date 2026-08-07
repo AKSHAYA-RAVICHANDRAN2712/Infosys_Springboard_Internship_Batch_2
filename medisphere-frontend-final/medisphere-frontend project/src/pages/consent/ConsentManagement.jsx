@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { getConsents, updateConsent, getAuditLog } from '../../api/consentService'
+import DashboardLayout from '../../components/layout/DashboardLayout'
 
 export default function ConsentManagement({ patientId = 101 }) {
   const [consents, setConsents] = useState([])
@@ -24,16 +25,19 @@ export default function ConsentManagement({ patientId = 101 }) {
     setLog(l)
   }
 
-  if (loading) return <div className="text-muted small">Loading consent settings…</div>
+  if (loading) {
+    return (
+      <DashboardLayout title="Consent Management">
+        <div className="text-muted small">Loading consent settings…</div>
+      </DashboardLayout>
+    )
+  }
 
   return (
-    <div>
-      <div className="mb-4">
-        <h4 className="brand-font mb-1">Consent Management</h4>
-        <p className="text-muted mb-0" style={{ fontSize: '0.88rem' }}>
-          Control how your health data is shared and used. Changes are logged for compliance.
-        </p>
-      </div>
+    <DashboardLayout title="Consent Management">
+      <p className="text-muted mb-4" style={{ fontSize: '0.88rem' }}>
+        Control how your health data is shared and used. Changes are logged for compliance.
+      </p>
 
       <div className="ms-card p-3 p-md-4 mb-4">
         {consents.map((c, i) => (
@@ -92,6 +96,6 @@ export default function ConsentManagement({ patientId = 101 }) {
           </tbody>
         </table>
       </div>
-    </div>
+    </DashboardLayout>
   )
 }

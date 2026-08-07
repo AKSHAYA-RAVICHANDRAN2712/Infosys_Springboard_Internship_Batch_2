@@ -10,6 +10,7 @@
 
 import React, { useState } from 'react'
 import { CONSENT_TYPES, verifyConsent } from '../../api/consentService'
+import DashboardLayout from '../../components/layout/DashboardLayout'
 
 const emptyForm = {
   patientId: '',
@@ -71,13 +72,10 @@ export default function ConsentVerification() {
   }
 
   return (
-    <div>
-      <div className="mb-4">
-        <h4 className="brand-font mb-1">Patient Consent Verification</h4>
-        <p className="text-muted mb-0" style={{ fontSize: '0.88rem' }}>
-          Record and verify a patient's consent event against the consent service.
-        </p>
-      </div>
+    <DashboardLayout title="Patient Consent Verification">
+      <p className="text-muted mb-4" style={{ fontSize: '0.88rem' }}>
+        Record and verify a patient's consent event against the consent service.
+      </p>
 
       <div className="row g-4">
         {/* Left: form */}
@@ -192,6 +190,6 @@ export default function ConsentVerification() {
           </div>
         </div>
       </div>
-    </div>
+    </DashboardLayout>
   )
 }
