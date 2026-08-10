@@ -1,0 +1,77 @@
+/* Form Controls & Inputs Stylesheet */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-field.full-width {
+  grid-column: span 2;
+}
+
+.form-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #9CA3AF;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.form-input, .form-select, .form-textarea {
+  background: #0F172A;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  color: #F9FAFB;
+  font-family: inherit;
+  font-size: 0.875rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: #2563EB;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.form-select option {
+  background: #0F172A;
+  color: #FFFFFF;
+}
+
+.form-textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* FHIR File Drag & Drop Zone */
+.dropzone {
+  border: 2px dashed rgba(59, 130, 246, 0.4);
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: var(--radius-md);
+  padding: 32px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.dropzone:hover, .dropzone.dragover {
+  border-color: #3B82F6;
+  background: rgba(37, 99, 235, 0.1);
+}
+
+.dropzone-icon {
+  width: 48px;
+  height: 48px;
+  color: #3B82F6;
+}
