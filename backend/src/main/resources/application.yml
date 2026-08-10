@@ -1,9 +1,0 @@
-server:
-  port: 8080
-
-spring:
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/medisphere_db
-      # Or if using Atlas Cloud:
-      # uri: mongodb+srv://<username>:<password>@cluster0.mongodb.net/medisphere_db?retryWrites=true&w=majority
