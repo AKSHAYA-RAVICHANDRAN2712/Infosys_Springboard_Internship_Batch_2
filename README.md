@@ -1,4 +1,4 @@
-**🏥 MediSphere Healthcare Management Platform
+**🏥 Healthcare Management Platform for Clinical Operations
 📌 Project Overview**
 
 MediSphere is a modern healthcare management platform designed to improve patient data management, healthcare monitoring, and secure information access.
