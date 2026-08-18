@@ -1,0 +1,8 @@
+# IDE
+.idea/
+.vscode/
+# Java build
+**/target/
+# Local secrets
+.env
+**/application-local.properties
