@@ -1,0 +1,39 @@
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# Java / Maven / Backend
+backend/target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+*.env
+.env.*
+
+# Python / ml-service
+ml-service/__pycache__/
+ml-service/**/__pycache__/
+ml-service/.venv/
+ml-service/venv/
+*.pyc
+
+# Build output
+frontend/dist/
+dist/
