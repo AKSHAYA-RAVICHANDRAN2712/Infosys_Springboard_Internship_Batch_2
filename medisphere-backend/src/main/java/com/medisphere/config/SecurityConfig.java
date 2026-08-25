@@ -1,6 +1,5 @@
 package com.medisphere.config;
 
-import com.medisphere.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.medisphere.security.JwtAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
@@ -25,36 +26,33 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(
-            HttpSecurity http) throws Exception {
-
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Disable CSRF because this is a REST API
+                // Disable CSRF for REST APIs
                 .csrf(csrf -> csrf.disable())
 
-                // JWT authentication = stateless
+                // Enable CORS
+                .cors(cors -> {})
+
+                // Stateless session for REST
                 .sessionManagement(session ->
-                        session.sessionCreationPolicy(
-                                SessionCreationPolicy.STATELESS
-                        )
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
 
-                // URL permissions
+                // Permit public testing & Milestone 1/2 API endpoints
                 .authorizeHttpRequests(auth -> auth
-
-                        // Public endpoints
                         .requestMatchers(
                                 "/",
                                 "/api/test",
                                 "/api/auth/**",
-                                "/api/patients/register"
+                                "/api/patients/**",
+                                "/api/v1/**",
+                                "/api/v1/patients/**"
                         ).permitAll()
-
-                        // Everything else requires JWT
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
 
-                // JWT filter
+                // JWT Filter
                 .addFilterBefore(
                         jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class
