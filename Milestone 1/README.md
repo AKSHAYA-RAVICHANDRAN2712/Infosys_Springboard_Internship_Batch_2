@@ -4,11 +4,12 @@ One project, two ways to run it:
 
 ```
 medisphere-fullstack/
-  backend/    Spring Boot API + WebSocket (Java 17, Maven)
+  backend/    Spring Boot API + WebSocket + Kafka consumer (Java 17, Maven)
               — also serves the built frontend as static files, so
                 `mvn spring-boot:run` (or the packaged .jar) alone
                 gives you the WHOLE app on one port.
   frontend/   React + Vite source (edit here, then rebuild into backend/)
+  docker-compose.yml   Local Kafka broker (KRaft mode) for vitals streaming
 ```
 
 The `backend/src/main/resources/static/` folder already contains a
@@ -20,6 +21,10 @@ no CORS to configure** — exactly what you want for "one host link".
 ## Run it (single artifact, closest to how you'll deploy it)
 
 ```bash
+# 1. Start Kafka (optional but needed for live vitals streaming)
+docker compose up -d
+
+# 2. Build and run the backend (which also serves the frontend)
 cd backend
 mvn clean package
 java -jar target/backend-0.1.0.jar
@@ -37,7 +42,8 @@ export DB_PASSWORD=yourpassword
 Open **http://localhost:8080** — that's the full app: login page,
 dashboards, Patient 360, everything. Demo login:
 `admin@medisphere.com` / `admin123` (or doctor/patient/reception,
-same passwords as before).
+same passwords as before). Open a Patient 360 page and the vitals
+panel will show live readings once Kafka is running.
 
 ## If you're actively editing the frontend
 
@@ -62,27 +68,32 @@ cp -r dist/* ../backend/src/main/resources/static/
 
 ## Deploying so it's reachable globally
 
-Because it's one Spring Boot app now, you only need to deploy **two**
-things instead of three:
+You need three things publicly hosted: the PostgreSQL database, Kafka,
+and this backend (which now bundles the frontend). See
+`backend/README.md` → "Deploying so it's reachable globally" for the
+full step-by-step (Railway/Render for the database + backend, Upstash
+or Confluent Cloud for Kafka's free tier). Kafka is the only
+optional piece — the app runs fine without it, vitals just won't
+stream.
 
-1. **Database** — managed PostgreSQL on [Railway](https://railway.app), [Render](https://render.com), [Supabase](https://supabase.com), or [Neon](https://neon.tech) (all have free tiers).
-2. **This backend** (which now includes the frontend) — deploy the
-   `backend/` folder to [Railway](https://railway.app) or
-   [Render](https://render.com). Both auto-detect Maven/Spring Boot.
-   Set env vars in their dashboard:
-   - `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` (from step 1)
-   - `JWT_SECRET` — a long random string, don't reuse the default
-   - `SQL_INIT_MODE=always` for the first deploy (seeds demo data), then switch to `never`
-   - `CORS_ALLOWED_ORIGINS` — can stay as-is since everything's same-origin now, but harmless to set anyway
-
-That platform gives you one public URL — e.g.
+That gives you one public URL — e.g.
 `https://medisphere-production.up.railway.app` — and that's your
-share-able "host link": open it in a browser and the whole app (UI +
-API + live vitals) works from that single address.
+share-able "host link".
 
 ## What's implemented (Patient 360 scope)
 
-See `backend/README.md` for the full endpoint list. In short: login,
-patient CRUD, allergies/prescriptions/appointment-history per patient,
-consent management + audit trail, and live vitals over WebSocket.
-Appointment booking and role dashboards aren't built yet.
+- Login (JWT), patient CRUD, allergies/prescriptions/appointment
+  history per patient
+- Appointment CRUD + status updates, role-based dashboard summary
+- **Consent management** — per-patient consent toggles + an immutable
+  audit trail (`GET/PATCH /api/patients/{id}/consents`, `GET
+  .../audit-log`), plus a standalone `POST /api/consent/verify` for
+  staff-facing verification. Fully wired end-to-end: frontend calls
+  the real API in `consentService.js`, backend persists every change.
+- **Live vitals over Kafka** — a simulated bedside-monitor producer
+  publishes readings to a `vitals.raw` topic; a consumer persists them
+  and pushes live updates to the browser over WebSocket. See
+  `backend/README.md` → "Kafka vitals streaming" for the full data
+  flow and how to swap in real monitors later.
+
+See `backend/README.md` for the full endpoint list.

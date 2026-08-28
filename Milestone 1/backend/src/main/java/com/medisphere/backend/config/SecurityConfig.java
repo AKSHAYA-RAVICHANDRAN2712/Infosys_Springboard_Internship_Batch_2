@@ -66,6 +66,28 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/appointments/**").hasAnyRole("ADMIN", "DOCTOR", "RECEPTIONIST", "PATIENT")
                         .requestMatchers(HttpMethod.PATCH, "/api/appointments/**").hasAnyRole("ADMIN", "DOCTOR", "RECEPTIONIST", "PATIENT")
 
+                        // Twins: read-only for everyone authenticated; sync is a clinical/admin action.
+                        .requestMatchers(HttpMethod.POST, "/api/twins/**").hasAnyRole("ADMIN", "DOCTOR")
+
+                        // Predictions: running the model and deleting are clinical/admin actions.
+                        .requestMatchers(HttpMethod.POST, "/api/predictions/**").hasAnyRole("ADMIN", "DOCTOR")
+                        .requestMatchers(HttpMethod.DELETE, "/api/predictions/**").hasAnyRole("ADMIN", "DOCTOR")
+
+                        // Alerts: any staff can create/acknowledge; delete restricted to ADMIN.
+                        .requestMatchers(HttpMethod.DELETE, "/api/alerts/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/alerts/**").hasAnyRole("ADMIN", "DOCTOR", "RECEPTIONIST")
+                        .requestMatchers(HttpMethod.PATCH, "/api/alerts/**").hasAnyRole("ADMIN", "DOCTOR", "RECEPTIONIST")
+
+                        // Care plans: staff can create/update; ADMIN/DOCTOR can delete.
+                        .requestMatchers(HttpMethod.DELETE, "/api/careplans/**").hasAnyRole("ADMIN", "DOCTOR")
+                        .requestMatchers(HttpMethod.POST, "/api/careplans", "/api/careplans/**").hasAnyRole("ADMIN", "DOCTOR")
+                        .requestMatchers(HttpMethod.PUT, "/api/careplans/**").hasAnyRole("ADMIN", "DOCTOR")
+                        .requestMatchers(HttpMethod.PATCH, "/api/careplans/**").hasAnyRole("ADMIN", "DOCTOR")
+
+                        // Reports: staff can generate/delete; everyone authenticated can read.
+                        .requestMatchers(HttpMethod.POST, "/api/reports/**").hasAnyRole("ADMIN", "DOCTOR", "RECEPTIONIST")
+                        .requestMatchers(HttpMethod.DELETE, "/api/reports/**").hasAnyRole("ADMIN", "DOCTOR")
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

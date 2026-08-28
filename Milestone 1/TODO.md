@@ -18,6 +18,12 @@
 - [x] Build backend successfully (mvn clean package)
 - [x] Create backend .env file
 - [x] Create medisphere database in PostgreSQL
+- [x] Add spring-kafka + docker-compose.yml (local Kafka, KRaft mode)
+- [x] VitalsStreamProducer — simulated per-patient reading publisher (Kafka producer)
+- [x] VitalsStreamConsumer — @KafkaListener, persists + forwards to WebSocket
+- [x] VitalsSessionRegistry — tracks active WS sessions per patient
+- [x] Refactor VitalsWebSocketHandler to register/unregister only (no more in-process simulation)
+- [x] Confirm consent management (Consent entity/service/controller + audit log) is complete end-to-end
 
 ## Frontend
 - [x] Rewrite axiosClient.js (env-driven base URL, no localhost)

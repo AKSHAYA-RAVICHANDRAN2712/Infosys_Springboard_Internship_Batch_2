@@ -10,8 +10,13 @@ import Register from './pages/auth/Register'
 import NotFound from './pages/NotFound'
 import Patient360 from './pages/patients/Patient360'
 import ConsentManagement from './pages/consent/ConsentManagement'
-import TwinDashboard from './pages/twin/TwinDashboard'
 import ConsentVerification from './pages/consent/ConsentVerification'
+
+import TwinsPage from './pages/twin/TwinsPage'
+import PredictionsPage from './pages/twin/PredictionsPage'
+import AlertsPage from './pages/twin/AlertsPage'
+import CarePlansPage from './pages/twin/CarePlansPage'
+import ReportsPage from './pages/twin/ReportsPage'
 
 import AdminDashboard from './pages/dashboard/AdminDashboard'
 import DoctorDashboard from './pages/dashboard/DoctorDashboard'
@@ -20,6 +25,11 @@ import ReceptionistDashboard from './pages/dashboard/ReceptionistDashboard'
 
 import PatientsPage from './pages/patients/PatientsPage'
 import AppointmentsPage from './pages/appointments/AppointmentsPage'
+
+// Twin-suite pages are shared across ADMIN / DOCTOR / RECEPTIONIST — same
+// roles the Sidebar already links /twins, /predictions, /alerts, /careplans
+// and /reports for.
+const TWIN_SUITE_ROLES = [ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]
 
 export default function App() {
   const { user, loading } = useAuth()
@@ -39,30 +49,48 @@ export default function App() {
       <Route path="/admin/patients" element={
         <ProtectedRoute allowedRoles={[ROLES.ADMIN]}><PatientsPage /></ProtectedRoute>
       } />
-      <Route path="/patients/:id/360" element={
-  <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST,ROLES.PATIENT]}>
-    <Patient360 />
-  </ProtectedRoute>
-} />
-
-<Route path="/consent" element={
-  <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST, ROLES.PATIENT]}>
-    <ConsentManagement />
-  </ProtectedRoute>
-} />
-<Route path="/twin-dashboard" element={
-  <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]}>
-    <TwinDashboard />
-  </ProtectedRoute>
-} />
       <Route path="/admin/appointments" element={
         <ProtectedRoute allowedRoles={[ROLES.ADMIN]}><AppointmentsPage /></ProtectedRoute>
       } />
+
+      {/* Shared: patient 360, consent, and the digital-twin suite */}
+      <Route path="/patients/:id/360" element={
+        <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST, ROLES.PATIENT]}>
+          <Patient360 />
+        </ProtectedRoute>
+      } />
+      <Route path="/consent" element={
+        <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST, ROLES.PATIENT]}>
+          <ConsentManagement />
+        </ProtectedRoute>
+      } />
+      {/* Staff arriving from a specific patient's 360 page land on THAT
+          patient's consent settings, not the self-service default above. */}
+      <Route path="/patients/:id/consent" element={
+        <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST, ROLES.PATIENT]}>
+          <ConsentManagement />
+        </ProtectedRoute>
+      } />
       <Route path="/consent/verify" element={
-  <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]}>
-    <ConsentVerification />
-  </ProtectedRoute>
-} />
+        <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.DOCTOR, ROLES.RECEPTIONIST]}>
+          <ConsentVerification />
+        </ProtectedRoute>
+      } />
+      <Route path="/twins" element={
+        <ProtectedRoute allowedRoles={TWIN_SUITE_ROLES}><TwinsPage /></ProtectedRoute>
+      } />
+      <Route path="/predictions" element={
+        <ProtectedRoute allowedRoles={TWIN_SUITE_ROLES}><PredictionsPage /></ProtectedRoute>
+      } />
+      <Route path="/alerts" element={
+        <ProtectedRoute allowedRoles={TWIN_SUITE_ROLES}><AlertsPage /></ProtectedRoute>
+      } />
+      <Route path="/careplans" element={
+        <ProtectedRoute allowedRoles={TWIN_SUITE_ROLES}><CarePlansPage /></ProtectedRoute>
+      } />
+      <Route path="/reports" element={
+        <ProtectedRoute allowedRoles={TWIN_SUITE_ROLES}><ReportsPage /></ProtectedRoute>
+      } />
 
       {/* Doctor */}
       <Route path="/doctor/dashboard" element={

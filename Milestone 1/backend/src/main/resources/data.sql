@@ -119,3 +119,56 @@ WHERE NOT EXISTS (SELECT 1 FROM consents WHERE patient_id = 101 AND label = 'SMS
 INSERT INTO vitals (patient_id, heart_rate, spo2, systolic_bp, diastolic_bp, temperature, recorded_at)
 SELECT 101, 72, 98, 120, 80, 36.8, TIMESTAMP'2026-08-06 19:09:03'
 WHERE NOT EXISTS (SELECT 1 FROM vitals WHERE patient_id = 101 AND recorded_at = TIMESTAMP'2026-08-06 19:09:03');
+
+-- Digital Twins — one per seeded patient, mirrors what TwinService.provision() creates on first access.
+INSERT INTO twins (id, patient_id, fhir_sync_status, fhir_resource_count, last_synced_at, created_at)
+SELECT * FROM (SELECT 401, 101, 'Synced', 12, TIMESTAMP'2026-08-06 19:09:03', TIMESTAMP'2026-06-02 09:00:00') t
+WHERE NOT EXISTS (SELECT 1 FROM twins WHERE id = 401);
+
+INSERT INTO twins (id, patient_id, fhir_sync_status, fhir_resource_count, last_synced_at, created_at)
+SELECT * FROM (SELECT 402, 102, 'Synced', 8, TIMESTAMP'2026-07-18 10:00:00', TIMESTAMP'2026-06-05 09:00:00') t
+WHERE NOT EXISTS (SELECT 1 FROM twins WHERE id = 402);
+
+INSERT INTO twins (id, patient_id, fhir_sync_status, fhir_resource_count, last_synced_at, created_at)
+SELECT * FROM (SELECT 403, 105, 'Synced', 6, TIMESTAMP'2026-07-05 09:30:00', TIMESTAMP'2026-06-10 09:00:00') t
+WHERE NOT EXISTS (SELECT 1 FROM twins WHERE id = 403);
+
+-- Predictions — sample risk-model runs, matching PredictionService's heuristic output shape.
+INSERT INTO predictions (id, patient_id, risk_type, risk_percent, risk_level, factors, model_version, created_at)
+SELECT * FROM (SELECT 501, 101, '12-month adverse cardiac event risk', 18.5, 'Moderate',
+       'Hypertension, Elevated systolic BP (138 mmHg)', 'heuristic-v1', TIMESTAMP'2026-07-30 08:15:00') t
+WHERE NOT EXISTS (SELECT 1 FROM predictions WHERE id = 501);
+
+INSERT INTO predictions (id, patient_id, risk_type, risk_percent, risk_level, factors, model_version, created_at)
+SELECT * FROM (SELECT 502, 102, '12-month adverse cardiac event risk', 42.0, 'High',
+       'Diabetes, Age >= 45, Elevated systolic BP (150 mmHg)', 'heuristic-v1', TIMESTAMP'2026-07-18 11:00:00') t
+WHERE NOT EXISTS (SELECT 1 FROM predictions WHERE id = 502);
+
+-- Alerts — one open, one already acknowledged.
+INSERT INTO alerts (id, patient_id, patient_name, severity, title, message, source, acknowledged, created_at)
+SELECT * FROM (SELECT 601, 102, 'Arjun Verma', 'Warning', 'High-risk prediction generated',
+       'Predicted 42.0% 12-month adverse cardiac event risk. Factors: Diabetes, Age >= 45, Elevated systolic BP (150 mmHg)',
+       'Prediction', FALSE, TIMESTAMP'2026-07-18 11:00:05') t
+WHERE NOT EXISTS (SELECT 1 FROM alerts WHERE id = 601);
+
+INSERT INTO alerts (id, patient_id, patient_name, severity, title, message, source, acknowledged, acknowledged_by, acknowledged_at, created_at)
+SELECT * FROM (SELECT 602, 101, 'Priya Sharma', 'Warning', 'Abnormal vitals detected',
+       'Systolic BP 145 mmHg elevated.', 'Vitals', TRUE, 'Dr. Rajesh Menon', TIMESTAMP'2026-07-30 09:00:00', TIMESTAMP'2026-07-30 08:45:00') t
+WHERE NOT EXISTS (SELECT 1 FROM alerts WHERE id = 602);
+
+-- Care plans
+INSERT INTO careplans (id, patient_id, patient_name, title, assigned_doctor, notes, follow_up_date, status, created_at)
+SELECT * FROM (SELECT 701, 101, 'Priya Sharma', 'Hypertension management plan', 'Dr. Rajesh Menon',
+       'Follow-up in 4 weeks, lipid panel recheck in 8 weeks.', DATE'2026-08-27', 'Active', TIMESTAMP'2026-07-12 10:00:00') t
+WHERE NOT EXISTS (SELECT 1 FROM careplans WHERE id = 701);
+
+INSERT INTO careplans (id, patient_id, patient_name, title, assigned_doctor, notes, follow_up_date, status, created_at)
+SELECT * FROM (SELECT 702, 102, 'Arjun Verma', 'Diabetes control plan', 'Dr. Rajesh Menon',
+       'HbA1c recheck in 6 weeks, dietician referral.', DATE'2026-08-29', 'Active', TIMESTAMP'2026-07-18 12:00:00') t
+WHERE NOT EXISTS (SELECT 1 FROM careplans WHERE id = 702);
+
+-- Reports
+INSERT INTO reports (id, patient_id, patient_name, type, title, content, generated_by, generated_at)
+SELECT * FROM (SELECT 801, 101, 'Priya Sharma', 'Summary', 'Priya Sharma — Summary Report',
+       'Patient: Priya Sharma | Age: 29 | Gender: Female | Condition: Hypertension', 'Dr. Rajesh Menon', TIMESTAMP'2026-07-30 09:15:00') t
+WHERE NOT EXISTS (SELECT 1 FROM reports WHERE id = 801);

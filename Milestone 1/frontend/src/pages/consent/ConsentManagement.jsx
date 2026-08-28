@@ -1,14 +1,25 @@
 // src/pages/consent/ConsentManagement.jsx
 
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { getConsents, updateConsent, getAuditLog } from '../../api/consentService'
 
-export default function ConsentManagement({ patientId = 101 }) {
+// Self-service default: when reached via the generic /consent nav item
+// (no :id in the URL — e.g. a logged-in patient viewing their own
+// settings), fall back to the demo patient. When reached from a
+// specific Patient 360 page (/patients/:id/consent), the route param
+// always wins so staff see the patient they were actually looking at.
+const DEFAULT_PATIENT_ID = 101
+
+export default function ConsentManagement({ patientId: patientIdProp }) {
+  const { id: patientIdFromRoute } = useParams()
+  const patientId = patientIdFromRoute ?? patientIdProp ?? DEFAULT_PATIENT_ID
   const [consents, setConsents] = useState([])
   const [log, setLog] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    setLoading(true)
     Promise.all([getConsents(patientId), getAuditLog(patientId)]).then(([c, l]) => {
       setConsents(c)
       setLog(l)

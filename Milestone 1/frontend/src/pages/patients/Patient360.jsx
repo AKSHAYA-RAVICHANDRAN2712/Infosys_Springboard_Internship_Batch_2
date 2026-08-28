@@ -69,7 +69,7 @@ export default function Patient360() {
             <span className="dot" style={{ background: patient.status === 'Active' ? 'var(--teal-500)' : 'var(--ink-soft)' }} />
             {patient.status}
           </span>
-          <Link to="/consent" className="btn btn-outline-primary btn-sm">
+          <Link to={`/patients/${patient.id}/consent`} className="btn btn-outline-primary btn-sm">
             <i className="bi bi-shield-check me-1" /> Consent settings
           </Link>
         </div>

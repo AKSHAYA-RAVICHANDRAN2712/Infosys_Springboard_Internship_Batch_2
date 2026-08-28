@@ -1,0 +1,47 @@
+version: "3.8"
+
+# Local Kafka broker for vitals streaming. Runs in KRaft mode (no
+# ZooKeeper needed). Start it before running the backend:
+#
+#   docker compose up -d
+#
+# The backend connects to it at localhost:9092 by default
+# (KAFKA_BOOTSTRAP_SERVERS env var if you need to change it).
+# If this isn't running, the app still starts fine — vitals just
+# won't stream until Kafka is up.
+
+services:
+  kafka:
+    image: apache/kafka:3.7.0
+    container_name: medisphere-kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+
+  # Optional: a web UI to inspect topics/messages while you're testing.
+  # Open http://localhost:8081 once both containers are up.
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: medisphere-kafka-ui
+    depends_on:
+      - kafka
+    ports:
+      - "8081:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+
+volumes:
+  kafka_data:

@@ -39,19 +39,30 @@ public class AlertService {
 
     public Alert create(Alert alert) {
         Patient patient = getPatient(alert.getPatientId());
+
         alert.setId(null);
-        if (alert.getPatientName() == null) alert.setPatientName(patient.getName());
-        if (alert.getSource() == null) alert.setSource("Manual");
+
+        if (alert.getPatientName() == null) {
+            alert.setPatientName(patient.getName());
+        }
+
+        if (alert.getSource() == null) {
+            alert.setSource("Manual");
+        }
+
         alert.setAcknowledged(false);
         alert.setCreatedAt(LocalDateTime.now());
+
         return alertRepository.save(alert);
     }
 
     public Alert acknowledge(Long id, String acknowledgedBy) {
         Alert alert = getById(id);
+
         alert.setAcknowledged(true);
         alert.setAcknowledgedBy(acknowledgedBy);
         alert.setAcknowledgedAt(LocalDateTime.now());
+
         return alertRepository.save(alert);
     }
 
@@ -59,6 +70,7 @@ public class AlertService {
         if (!alertRepository.existsById(id)) {
             throw new ResourceNotFoundException("Alert " + id + " not found");
         }
+
         alertRepository.deleteById(id);
     }
 
@@ -68,64 +80,133 @@ public class AlertService {
 
     private Patient getPatient(Long patientId) {
         return patientRepository.findById(patientId)
-                .orElseThrow(() -> new ResourceNotFoundException("Patient " + patientId + " not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Patient " + patientId + " not found"));
     }
 
     /**
      * Threshold-based auto-alerting, called from the Kafka vitals stream
-     * (see VitalsStreamConsumer) so every abnormal reading that flows
-     * through the live feed raises a real alert automatically.
+     * so every abnormal reading that flows through the live feed raises
+     * a real alert automatically.
      */
     public void evaluateVitals(Long patientId, Vitals v) {
+
         StringBuilder reasons = new StringBuilder();
         String severity = "Warning";
 
-        if (v.getHeartRate() != null && (v.getHeartRate() < 45 || v.getHeartRate() > 130)) {
-            reasons.append("Heart rate ").append(v.getHeartRate()).append(" bpm out of safe range. ");
+        // Heart rate
+        if (v.getHeartRate() != null &&
+                (v.getHeartRate() < 45 || v.getHeartRate() > 130)) {
+
+            reasons.append("Heart rate ")
+                    .append(v.getHeartRate())
+                    .append(" bpm out of safe range. ");
+
             severity = "Critical";
-        } else if (v.getHeartRate() != null && (v.getHeartRate() < 55 || v.getHeartRate() > 110)) {
-            reasons.append("Heart rate ").append(v.getHeartRate()).append(" bpm elevated/low. ");
+
+        } else if (v.getHeartRate() != null &&
+                (v.getHeartRate() < 55 || v.getHeartRate() > 110)) {
+
+            reasons.append("Heart rate ")
+                    .append(v.getHeartRate())
+                    .append(" bpm elevated/low. ");
         }
 
+        // SpO2
         if (v.getSpo2() != null && v.getSpo2() < 90) {
-            reasons.append("SpO2 ").append(v.getSpo2()).append("% critically low. ");
+
+            reasons.append("SpO2 ")
+                    .append(v.getSpo2())
+                    .append("% critically low. ");
+
             severity = "Critical";
+
         } else if (v.getSpo2() != null && v.getSpo2() < 94) {
-            reasons.append("SpO2 ").append(v.getSpo2()).append("% below normal. ");
+
+            reasons.append("SpO2 ")
+                    .append(v.getSpo2())
+                    .append("% below normal. ");
         }
 
-        if (v.getSystolicBp() != null && (v.getSystolicBp() > 160 || v.getSystolicBp() < 85)) {
-            reasons.append("Systolic BP ").append(v.getSystolicBp()).append(" mmHg out of safe range. ");
+        // Systolic blood pressure
+        if (v.getSystolicBp() != null &&
+                (v.getSystolicBp() > 160 || v.getSystolicBp() < 85)) {
+
+            reasons.append("Systolic BP ")
+                    .append(v.getSystolicBp())
+                    .append(" mmHg out of safe range. ");
+
             severity = "Critical";
-        } else if (v.getSystolicBp() != null && v.getSystolicBp() > 140) {
-            reasons.append("Systolic BP ").append(v.getSystolicBp()).append(" mmHg elevated. ");
+
+        } else if (v.getSystolicBp() != null &&
+                v.getSystolicBp() > 140) {
+
+            reasons.append("Systolic BP ")
+                    .append(v.getSystolicBp())
+                    .append(" mmHg elevated. ");
         }
 
-        if (v.getTemperature() != null && v.getTemperature().doubleValue() >= 39.0) {
-            reasons.append("Temperature ").append(v.getTemperature()).append("\u00b0C — high fever. ");
+        // Temperature
+        if (v.getTemperature() != null &&
+                v.getTemperature().doubleValue() >= 39.0) {
+
+            reasons.append("Temperature ")
+                    .append(v.getTemperature())
+                    .append("\u00b0C — high fever. ");
+
             severity = "Critical";
-        } else if (v.getTemperature() != null && v.getTemperature().doubleValue() >= 38.0) {
-            reasons.append("Temperature ").append(v.getTemperature()).append("\u00b0C elevated. ");
+
+        } else if (v.getTemperature() != null &&
+                v.getTemperature().doubleValue() >= 38.0) {
+
+            reasons.append("Temperature ")
+                    .append(v.getTemperature())
+                    .append("\u00b0C elevated. ");
         }
 
-        if (reasons.length() == 0) return;
+        // No abnormal values
+        if (reasons.length() == 0) {
+            return;
+        }
 
-        // Debounce: don't flood the alerts list with a new row every ~2s while a
-        // patient's reading stays abnormal — one open Vitals alert per 5-minute window.
-        boolean alreadyOpen = alertRepository.existsByPatientIdAndSourceAndAcknowledgedFalseAndCreatedAtAfter(
-                patientId, "Vitals", LocalDateTime.now().minusMinutes(5));
-        if (alreadyOpen) return;
+        /*
+         * Debounce:
+         * Don't create a new alert every few seconds while a patient's
+         * vitals remain abnormal.
+         *
+         * Only one unacknowledged Vitals alert is created within 5 minutes.
+         */
+        boolean alreadyOpen =
+                alertRepository.existsByPatientIdAndSourceAndAcknowledgedFalseAndCreatedAtAfter(
+                        patientId,
+                        "Vitals",
+                        LocalDateTime.now().minusMinutes(5)
+                );
+
+        if (alreadyOpen) {
+            return;
+        }
+
+        /*
+         * Create final copies because these values are used inside
+         * the lambda expression below.
+         */
+        final String finalSeverity = severity;
+        final String finalMessage = reasons.toString().trim();
 
         patientRepository.findById(patientId).ifPresent(patient -> {
+
             Alert alert = new Alert();
+
             alert.setPatientId(patientId);
             alert.setPatientName(patient.getName());
-            alert.setSeverity(severity);
+            alert.setSeverity(finalSeverity);
             alert.setTitle("Abnormal vitals detected");
-            alert.setMessage(reasons.toString().trim());
+            alert.setMessage(finalMessage);
             alert.setSource("Vitals");
             alert.setAcknowledged(false);
             alert.setCreatedAt(LocalDateTime.now());
+
             alertRepository.save(alert);
         });
     }
