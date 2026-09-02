@@ -1,0 +1,19 @@
+{
+  "threshold": 0.5,
+  "precisionPercent": 100.0,
+  "recallPercent": 100.0,
+  "accuracyPercent": 100.0,
+  "truePositives": 1000,
+  "falsePositives": 0,
+  "total": 2000,
+  "confusionMatrix": [
+    [
+      1000,
+      0
+    ],
+    [
+      0,
+      1000
+    ]
+  ]
+}

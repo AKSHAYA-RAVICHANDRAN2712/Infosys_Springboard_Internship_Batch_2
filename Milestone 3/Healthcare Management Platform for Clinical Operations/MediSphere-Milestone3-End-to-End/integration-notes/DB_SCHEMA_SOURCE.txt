@@ -1,0 +1,1 @@
+Existing team DB tables from Nilesh schema: patients, vitals, anomaly_detection, anomaly_result. No dedicated Alert table was present. Milestone 3 adds alert_fatigue and m3_anomaly_record. The vitals table schema did not list created_at, so this integrated project intentionally does not map a created_at column on Vitals.

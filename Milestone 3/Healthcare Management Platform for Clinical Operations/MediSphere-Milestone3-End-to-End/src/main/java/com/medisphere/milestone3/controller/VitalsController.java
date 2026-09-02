@@ -1,0 +1,3 @@
+package com.medisphere.milestone3.controller;
+import com.medisphere.milestone3.dto.*;import com.medisphere.milestone3.service.VitalsService;import jakarta.validation.Valid;import org.springframework.web.bind.annotation.*;import java.util.List;
+@RestController @RequestMapping("/api/vitals") @CrossOrigin(origins="*") public class VitalsController{private final VitalsService s;public VitalsController(VitalsService s){this.s=s;}@PostMapping public VitalsResponse create(@Valid @RequestBody VitalsRequest r){return s.save(r);}@GetMapping("/recent") public List<VitalsResponse> recent(){return s.recent();}}
