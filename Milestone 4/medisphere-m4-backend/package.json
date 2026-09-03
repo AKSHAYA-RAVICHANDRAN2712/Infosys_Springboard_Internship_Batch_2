@@ -1,0 +1,21 @@
+{
+  "name": "medisphere-m4-backend",
+  "version": "1.0.0",
+  "description": "MediSphere Milestone 4 backend - Outcome Measurement, Provider Collaboration, Clinical Guidance Compliance",
+  "type": "commonjs",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "pg": "^8.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
