@@ -1,0 +1,11 @@
+{
+  "info":{"name":"MediSphere Milestone 4 Team C","schema":"https://schema.getpostman.com/json/collection/v2.1.0/collection.json"},
+  "item":[
+    {"name":"Clinical Health","request":{"method":"GET","url":"http://localhost:8102/api/clinical-guidelines/health"}},
+    {"name":"Clinical Compliance","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"patientId\":\"101\",\"carePlanId\":\"501\",\"condition\":\"Diabetes\",\"age\":52,\"hba1c\":6.5,\"hba1cMonitoringDays\":60,\"allergies\":[],\"medications\":[\"Metformin\"],\"carePlanMedications\":[\"Metformin\"]}"},"url":"http://localhost:8102/api/clinical-guidelines/check"}},
+    {"name":"Careplan Health","request":{"method":"GET","url":"http://localhost:8100/api/careplans/health"}},
+    {"name":"Careplan Safety Check","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"patientId\":\"101\",\"medication\":\"Metformin\",\"dosage\":500,\"unit\":\"mg\",\"frequency\":\"twice daily\",\"duration\":30}"},"url":"http://localhost:8100/api/careplans/safety-check"}},
+    {"name":"Drug Health","request":{"method":"GET","url":"http://localhost:8101/api/interactions/health"}},
+    {"name":"Drug Interaction Check","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"medicines\":[\"Aspirin\",\"Warfarin\"]}"},"url":"http://localhost:8101/api/interactions/check"}}
+  ]
+}

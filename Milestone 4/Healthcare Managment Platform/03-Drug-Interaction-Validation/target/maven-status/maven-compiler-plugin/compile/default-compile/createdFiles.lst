@@ -1,0 +1,5 @@
+com\teamc\druginteraction\dto\InteractionResponse.class
+com\teamc\druginteraction\service\DrugInteractionService.class
+com\teamc\druginteraction\DrugInteractionValidationApplication.class
+com\teamc\druginteraction\controller\DrugInteractionController.class
+com\teamc\druginteraction\dto\InteractionCheckRequest.class
