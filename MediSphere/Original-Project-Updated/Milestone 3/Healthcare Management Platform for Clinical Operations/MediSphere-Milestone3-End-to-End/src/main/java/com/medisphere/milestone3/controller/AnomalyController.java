@@ -1,0 +1,3 @@
+package com.medisphere.milestone3.controller;
+import com.medisphere.milestone3.dto.*;import com.medisphere.milestone3.service.AnomalyService;import org.springframework.web.bind.annotation.*;import java.util.*;
+@RestController @RequestMapping("/api/anomaly") @CrossOrigin(origins="*") public class AnomalyController{private final AnomalyService s;public AnomalyController(AnomalyService s){this.s=s;}@GetMapping("/health") public Map<String,Object> health(){return s.health();}@GetMapping("/precision") public PrecisionResponse precision(){return s.precision();}@PostMapping("/detect") public AnomalyResponse detect(@RequestBody Map<String,Object> p){return s.detect(p);}}

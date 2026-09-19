@@ -1,0 +1,25 @@
+{
+    "model": "Random Forest",
+    "accuracy": 72.75943396226415,
+    "precision": 26.605504587155966,
+    "recall": 44.96124031007752,
+    "f1_score": 33.429394812680115,
+    "confusion_matrix": [
+        [
+            559,
+            160
+        ],
+        [
+            71,
+            58
+        ]
+    ],
+    "training_samples": 3392,
+    "testing_samples": 848,
+    "best_parameters": {
+        "max_depth": 10,
+        "min_samples_leaf": 2,
+        "min_samples_split": 5,
+        "n_estimators": 200
+    }
+}

@@ -1,0 +1,3 @@
+package com.teamc.careplansafety.dto;
+import java.util.List;
+public class CarePlanSafetyResponse { private boolean safe; private String status; private List<SafetyViolation> violations; private String checkedAt; public CarePlanSafetyResponse(){} public CarePlanSafetyResponse(boolean safe,String status,List<SafetyViolation> v,String t){this.safe=safe;this.status=status;this.violations=v;this.checkedAt=t;} public boolean isSafe(){return safe;} public String getStatus(){return status;} public List<SafetyViolation> getViolations(){return violations;} public String getCheckedAt(){return checkedAt;} }

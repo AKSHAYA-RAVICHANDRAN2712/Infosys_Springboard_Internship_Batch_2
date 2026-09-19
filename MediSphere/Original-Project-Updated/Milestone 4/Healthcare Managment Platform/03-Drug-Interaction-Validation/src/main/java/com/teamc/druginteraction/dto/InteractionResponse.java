@@ -1,0 +1,2 @@
+package com.teamc.druginteraction.dto;
+public class InteractionResponse { private String drug1,drug2,severity,description,recommendation; public InteractionResponse(){} public InteractionResponse(String a,String b,String s,String d,String r){drug1=a;drug2=b;severity=s;description=d;recommendation=r;} public String getDrug1(){return drug1;} public String getDrug2(){return drug2;} public String getSeverity(){return severity;} public String getDescription(){return description;} public String getRecommendation(){return recommendation;} }

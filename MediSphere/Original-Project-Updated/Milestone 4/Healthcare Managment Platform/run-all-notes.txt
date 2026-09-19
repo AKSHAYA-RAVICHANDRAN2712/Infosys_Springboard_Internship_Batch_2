@@ -1,0 +1,1 @@
+Start the three Spring Boot applications in IntelliJ first, then run run-frontend.bat.

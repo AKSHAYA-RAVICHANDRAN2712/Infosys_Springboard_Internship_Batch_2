@@ -1,0 +1,3 @@
+# Original submitted TFF implementation. Use a Python/TensorFlow-compatible environment separately.
+tensorflow==2.15.1
+tensorflow-federated==0.87.0

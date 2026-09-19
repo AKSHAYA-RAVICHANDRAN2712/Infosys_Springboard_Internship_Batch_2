@@ -1,0 +1,4 @@
+Raja: Vitals Range Validation -> POST /api/vitals
+Sarayana: Python ML -> GET /health, GET /metrics, POST /predict on port 5001; Java consumes these endpoints.
+Shashikant: Alert Fatigue Prevention -> /api/alerts
+Frontend: same-origin /api endpoints on Spring Boot port 8080
