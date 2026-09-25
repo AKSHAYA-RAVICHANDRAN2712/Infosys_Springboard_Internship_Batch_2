@@ -1,43 +1,8 @@
-# Healthcare Management Platform for Clinical Operations
+# 🏥 Healthcare Management Platform for Clinical Operations
 
 > **Infosys Springboard Team Project**
 
-A centralized, AI-enabled healthcare management platform designed to support clinical operations through patient information management, AI-based risk prediction, explainable AI, clinical rule processing, real-time notifications, provider collaboration, outcome measurement, and clinical-guidance compliance.
-
----
-
-## Table of Contents
-
-- [About the Project](#about-the-project)
-- [Problem Statement](#problem-statement)
-- [Objectives](#objectives)
-- [Scope](#scope)
-- [Key Features](#key-features)
-- [System Architecture](#system-architecture)
-- [Technology Stack](#technology-stack)
-- [Project Modules](#project-modules)
-- [AI and Machine Learning](#ai-and-machine-learning)
-- [Explainable AI with SHAP](#explainable-ai-with-shap)
-- [Model Versioning](#model-versioning)
-- [Clinical Rule Engine](#clinical-rule-engine)
-- [Real-Time Monitoring and Notifications](#real-time-monitoring-and-notifications)
-- [Database Design](#database-design)
-- [End-to-End Workflow](#end-to-end-workflow)
-- [Development Milestones](#development-milestones)
-- [API Endpoints](#api-endpoints)
-- [Project Structure](#project-structure)
-- [Installation and Setup](#installation-and-setup)
-- [Running the Project](#running-the-project)
-- [Testing](#testing)
-- [Security and Privacy](#security-and-privacy)
-- [Results](#results)
-- [Limitations](#limitations)
-- [Future Enhancements](#future-enhancements)
-- [Team](#team)
-- [Project Information](#project-information)
-- [Acknowledgement](#acknowledgement)
-- [Disclaimer](#disclaimer)
-- [License](#license)
+A centralized healthcare management platform designed to support clinical operations through patient information management, AI-based risk prediction, explainable AI, clinical rule processing, real-time notifications, provider collaboration, outcome measurement, and clinical-guidance compliance.
 
 ---
 
@@ -49,11 +14,11 @@ The platform integrates patient information, appointments, consent records, vita
 
 The system follows a modular architecture in which:
 
-- The frontend provides the primary user interface.
+- The frontend provides the primary clinical operations interface.
 - Backend services process requests and business logic.
 - PostgreSQL provides persistent relational storage.
 - AI/ML services provide risk prediction and explainability.
-- Clinical rules convert conditions into actionable events.
+- Clinical rules convert monitored conditions into actionable events.
 - Real-time communication provides timely notifications.
 - Outcome and collaboration modules extend the workflow beyond prediction and alerts.
 
@@ -63,7 +28,7 @@ The project was developed progressively across four milestones, starting with co
 
 ## Problem Statement
 
-Healthcare environments manage large amounts of interconnected information such as:
+Healthcare organizations manage large amounts of interconnected information such as:
 
 - Patient demographics
 - Clinical conditions
@@ -92,7 +57,7 @@ The proposed platform addresses these challenges by connecting patient data, AI 
 The major objectives of the project are:
 
 - Develop a centralized healthcare management platform.
-- Provide a consolidated **Patient 360** view.
+- Provide a consolidated Patient 360 view.
 - Manage patients, appointments, and consent information.
 - Store and retrieve patient vital signs.
 - Integrate AI-based risk prediction.
@@ -142,11 +107,9 @@ The architecture also establishes a foundation for future extensions such as:
 
 ---
 
-# Key Features
+## ✨ Key Features
 
-## Patient Management
-
-The Patient Management module provides:
+### Patient Management
 
 - Patient registration
 - Patient search
@@ -156,49 +119,32 @@ The Patient Management module provides:
 - Patient 360
 - Consolidated clinical information
 
----
+### Appointment Management
 
-## Appointment Management
+- Schedule appointments
+- Maintain appointment records
+- Connect patients with providers
+- Support follow-up coordination
 
-The Appointment module supports:
+### Consent Management
 
-- Appointment scheduling
-- Appointment records
-- Patient-provider association
-- Follow-up coordination
+- Store consent records
+- Verify consent
+- Maintain authorization-related information
 
----
+### Vital Monitoring
 
-## Consent Management
+- Store patient vital measurements
+- Monitor patient status
+- Display vital trends
+- View monitoring dashboards
+- Connect monitoring information with clinical rules
 
-The Consent Management module provides:
+### Patient 360
 
-- Consent record storage
-- Consent verification
-- Authorization-related information
-- Consent workflow support
+Patient 360 provides a consolidated view of important clinical information, connecting:
 
----
-
-## Vital Monitoring
-
-The monitoring module provides:
-
-- Storage of patient vital measurements
-- Patient status monitoring
-- Vital trend information
-- Monitoring dashboards
-- Connection between vital data and clinical rules
-
----
-
-## Patient 360
-
-Patient 360 provides a consolidated view of important clinical information.
-
-It connects patient identity with:
-
-- Demographics
+- Patient demographics
 - Clinical conditions
 - Medications
 - Appointments
@@ -207,44 +153,224 @@ It connects patient identity with:
 - Alerts
 - Other relevant clinical information
 
-This allows users to review patient context without switching between disconnected systems.
+### Careplans
+
+The Careplan module organizes:
+
+- Planned interventions
+- Care activities
+- Follow-up activities
+- Clinical actions
+
+### Reports and Insights
+
+The platform provides reports and insights for reviewing:
+
+- Clinical information
+- Monitoring activity
+- Alert activity
+- Operational information
+- Project-level summaries
 
 ---
 
-## AI-Based Risk Prediction
+## 🏗️ System Architecture
+
+The platform follows a layered architecture consisting of presentation, application/service, AI, event-processing, and data layers.
+
+    USERS
+         |
+         v
+    React Frontend
+    Vite + Axios
+    React Router
+         |
+         v
+    REST APIs
+         |
+         +-------------------------+
+         |                         |
+         v                         v
+    Spring Boot              Node.js / Express
+    Core Backend             Specialized Services
+         |                         |
+         +------------+------------+
+                      |
+                      v
+                 PostgreSQL
+                   Database
+                      |
+          +-----------+-----------+
+          |           |           |
+          v           v           v
+       AI / ML    Clinical     Real-Time
+       Service    Rule Engine  Monitoring
+          |                       |
+          v                       v
+    Random Forest              Socket.IO
+          |
+          v
+        SHAP
+
+---
+
+## System Data Flow
+
+### Standard CRUD Flow
+
+    User Action
+         |
+         v
+    React Frontend
+         |
+         v
+    API Request
+         |
+         v
+    Backend Validation
+         |
+         v
+    Business Logic
+         |
+         v
+    PostgreSQL / Specialized Service
+         |
+         v
+    JSON Response
+         |
+         v
+    React Frontend
+
+### AI Flow
+
+    Patient Clinical Features
+             |
+             v
+        Active Model
+             |
+             v
+        Random Forest
+             |
+             v
+        Risk Prediction
+             |
+             v
+    Prediction Persistence
+             |
+             v
+       SHAP Analysis
+             |
+             v
+    Frontend Presentation
+
+### Clinical Event Flow
+
+    Monitoring / Prediction
+             |
+             v
+       Clinical Rule
+             |
+             v
+    Condition Evaluation
+             |
+             v
+      Rule Execution
+             |
+             v
+       Notification
+             |
+             v
+    Real-Time Frontend Alert
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technology | Purpose |
+|---|---|---|
+| Frontend | React.js | User interface |
+| Build Tool | Vite | Frontend development and build |
+| UI | Bootstrap / CSS | Styling |
+| API Client | Axios | API communication |
+| Routing | React Router | Application navigation |
+| Core Backend | Java 17 | Backend development |
+| Framework | Spring Boot | REST APIs and business logic |
+| Persistence | Spring Data JPA | Relational data access |
+| Security | Spring Security | Authentication and authorization |
+| Specialized Backend | Node.js | Specialized workflow services |
+| Web Framework | Express.js | REST APIs |
+| Real-Time | Socket.IO / WebSocket | Live events and notifications |
+| AI Service | Python / Flask | Prediction and explainability APIs |
+| Machine Learning | Scikit-learn | Machine learning |
+| ML Algorithm | Random Forest | Patient risk prediction |
+| Explainability | SHAP | Feature contribution explanations |
+| Database | PostgreSQL | Persistent relational storage |
+| Synthetic Data | Synthea | Development healthcare data |
+| Streaming | Apache Kafka | Event streaming |
+| Administration | pgAdmin | Database management |
+| Testing | Postman | API testing |
+| Version Control | Git / GitHub | Source control |
+
+---
+
+## Project Modules
+
+### Core Modules
+
+- Dashboard
+- Patients
+- Patient 360
+- Appointments
+- Tasks
+- Predictions
+- Alerts
+- Careplans
+- Reports
+- Monitoring
+- Insights
+- Consent and Verification
+
+### Advanced Clinical Modules
+
+- Outcome Measurement
+- Provider Collaboration
+- Clinical Guidance
+- Guidance Compliance
+
+---
+
+## AI and Machine Learning
 
 The platform uses a **Random Forest machine-learning model** to generate patient risk predictions.
 
 ### Prediction Workflow
 
-```text
-Patient Clinical Data
-        |
-        v
-Feature Preparation
-        |
-        v
-Active Model Selection
-        |
-        v
-Random Forest Model
-        |
-        v
-Risk Prediction
-        |
-        v
-Prediction Persistence
-        |
-        v
-SHAP Explanation
-        |
-        v
-Frontend Display
-```
+    Patient Clinical Data
+            |
+            v
+    Feature Preparation
+            |
+            v
+    Active Model Selection
+            |
+            v
+    Random Forest Model
+            |
+            v
+    Risk Prediction
+            |
+            v
+    Prediction Persistence
+            |
+            v
+    SHAP Explanation
+            |
+            v
+    Frontend Display
 
 The prediction is stored together with patient and model-version information so that the result can be reviewed later.
 
-The AI layer is designed as a decision-support component and is not intended to replace qualified medical judgment.
+The AI component is designed as a decision-support component and is not intended to replace qualified medical judgment.
 
 ---
 
@@ -252,7 +378,7 @@ The AI layer is designed as a decision-support component and is not intended to 
 
 The platform uses **SHAP (SHapley Additive exPlanations)** to estimate how individual input features contribute to a model output.
 
-Instead of displaying only a risk label, the platform provides feature-level information that helps users understand the model output.
+Instead of displaying only a risk label, the platform provides feature-level explanations that help users understand the model output.
 
 SHAP supports:
 
@@ -260,9 +386,9 @@ SHAP supports:
 - Prediction interpretation
 - Model transparency
 - Explainable risk results
-- Clinical decision-support workflows
+- Decision-support workflows
 
-> SHAP explanations are treated as model evidence and not as a medical diagnosis.
+> **Note:** SHAP explanations represent model evidence and are not medical diagnoses.
 
 ---
 
@@ -284,7 +410,7 @@ A prediction can therefore be associated with the specific model version that ge
 
 ---
 
-# Clinical Rule Engine
+## Clinical Rule Engine
 
 The **Clinical Rule Engine** translates configured clinical conditions into actionable system events.
 
@@ -296,35 +422,33 @@ Each rule can contain:
 | `rule_name` | Human-readable rule name |
 | `description` | Description of the clinical condition |
 | `condition` | Condition or threshold to evaluate |
-| `action` | Action to perform when the rule triggers |
+| `action` | Action performed when the rule triggers |
 | `is_active` | Controls whether the rule is evaluated |
 
 ### Rule Evaluation Process
 
-```text
-Patient / Vital / Prediction Context
-                |
-                v
-         Identify Active Rules
-                |
-                v
-        Evaluate Conditions
-                |
-                v
-        Record Rule Execution
-                |
-                v
-       Generate Notification
-                |
-                v
-        Frontend Alert
-```
+    Patient / Vital / Prediction Context
+                    |
+                    v
+             Identify Active Rules
+                    |
+                    v
+             Evaluate Conditions
+                    |
+                    v
+             Record Rule Execution
+                    |
+                    v
+            Generate Notification
+                    |
+                    v
+              Frontend Alert
 
-For example, a rule can define that an important vital value exceeds a configured threshold. When the condition is satisfied, the backend can record the rule execution and generate an alert.
+For example, when an important vital value exceeds a configured threshold, the system can record the rule execution and generate an alert.
 
 ---
 
-# Real-Time Monitoring and Notifications
+## Real-Time Monitoring and Notifications
 
 Real-time monitoring connects:
 
@@ -336,21 +460,19 @@ Real-time monitoring connects:
 
 ### Notification Flow
 
-```text
-Clinical Event
-      |
-      v
-Express API
-      |
-      v
-PostgreSQL
-      |
-      v
-Socket.IO
-      |
-      v
-Frontend Alert / Toast
-```
+    Clinical Event
+          |
+          v
+      Express API
+          |
+          v
+      PostgreSQL
+          |
+          v
+       Socket.IO
+          |
+          v
+    Frontend Alert / Toast
 
 ### Notification Lifecycle
 
@@ -363,100 +485,96 @@ Frontend Alert / Toast
 
 ---
 
-# Project Modules
+## Database Design
 
-## Core Modules
+**PostgreSQL** is used as the central persistent relational database.
 
-- Dashboard
-- Patients
-- Patient 360
+### Core Application Data
+
+- Users and roles
+- Patients and demographics
+- Doctors and providers
 - Appointments
-- Tasks
+- Billing
+- Treatments
+- Consents
+- Vitals
 - Predictions
-- Alerts
-- Careplans
-- Reports
-- Monitoring
-- Insights
-- Consent and Verification
+- Model versions
+- SHAP explanations
 
-## Advanced Clinical Modules
+### Milestone 3 Data
 
-- Outcome Measurement
-- Provider Collaboration
-- Clinical Guidance
-- Guidance Compliance
-
----
-
-## Dashboard
-
-The Dashboard provides an overview of operational and clinical activity.
-
-It can display:
-
-- Summary cards
-- Charts
-- Status indicators
-- Operational information
-- Clinical information
+- Clinical rules
+- Rule executions
+- Notifications
 - Monitoring summaries
-- Alert information
+- Insight information
+
+### Milestone 4 Data
+
+- Outcome measurements
+- Provider collaborations
+- Collaboration notes
+- Clinical guidance
+- Guidance compliance
+
+### Database Engineering
+
+The database uses:
+
+- Primary keys
+- Foreign keys
+- Constraints
+- Indexes
+- Views
+- Triggers
+- SQL scripts
+- Separate schemas
+
+### Entity Relationships
+
+    Patients
+       |
+       +---- Predictions
+       |         |
+       |         +---- Model Versions
+       |
+       +---- Rule Executions
+       |         |
+       |         +---- Clinical Rules
+       |
+       +---- Outcome Measurements
+       |
+       +---- Provider Collaborations
+                 |
+                 +---- Collaboration Notes
+
+### Milestone 4 Relationships
+
+    Clinical Rules
+          |
+          v
+    Clinical Guidance
+          |
+          v
+    Provider Action
+          |
+          v
+    Guidance Compliance
+          |
+          v
+    Outcome Measurement
 
 ---
 
-## Predictions
+## Synthea Synthetic Data
 
-The Predictions module presents AI-generated patient risk information.
+The project uses **Synthea** to provide synthetic healthcare information for development and demonstration.
 
-It connects the prediction with:
+Synthetic data provides realistic healthcare relationships without depending on real patient records.
 
-- Patient information
-- Model version
-- Risk result
-- SHAP explanation
-- Clinical context
-
----
-
-## Alerts
-
-The Alerts module displays rule-triggered clinical events.
-
-Alerts can contain:
-
-- Patient context
-- Rule information
-- Priority
-- Severity
-- Prediction information
-- Notification status
-
-Real-time delivery allows users to respond promptly to important events.
-
----
-
-## Careplans
-
-The Careplan module organizes:
-
-- Planned interventions
-- Care activities
-- Follow-up activities
-- Clinical actions
-
-It provides a structured bridge between identifying a clinical issue and performing an intervention.
-
----
-
-## Reports
-
-The Reports module aggregates relevant clinical and operational information for:
-
-- Review
-- Monitoring
-- Demonstration
-- Future export-oriented workflows
+The project uses synthetic healthcare information for development and demonstration rather than actual patient records.
 
 ---
 
@@ -501,15 +619,11 @@ This keeps provider communication connected to the clinical workflow.
 
 ---
 
-## Clinical Guidance
+## Clinical Guidance and Compliance
 
 Clinical guidance connects configured clinical rules with recommended or expected provider actions.
 
 It helps convert an alert condition into a defined operational response.
-
----
-
-## Guidance Compliance
 
 The compliance module records:
 
@@ -518,368 +632,97 @@ The compliance module records:
 - Remarks
 - Compliance state
 
-Typical compliance states include:
+Possible compliance states include:
 
-- Pending
-- Compliant
-- Partially Compliant
-- Non-Compliant
-
----
-
-# System Architecture
-
-The platform follows a layered architecture consisting of presentation, application/service, AI, event-processing, and data layers.
-
-```text
-                         USERS
-          +----------+----------+----------+
-          |          |          |          |
-       Doctor     Provider     Admin     Patient
-          |          |          |          |
-          +----------+----------+----------+
-                         |
-                         v
-                +------------------+
-                | React Frontend   |
-                | Vite + Axios     |
-                | React Router     |
-                +--------+---------+
-                         |
-                         v
-                +------------------+
-                |    REST APIs     |
-                +--------+---------+
-                         |
-             +-----------+-----------+
-             |                       |
-             v                       v
-    +----------------+      +------------------+
-    | Spring Boot    |      | Node.js /        |
-    | Core Backend   |      | Express.js       |
-    +-------+--------+      +---------+--------+
-            |                         |
-            +------------+------------+
-                         |
-                         v
-                +------------------+
-                |    PostgreSQL    |
-                |     Database     |
-                +--------+---------+
-                         |
-        +----------------+----------------+
-        |                |                |
-        v                v                v
-  +-----------+   +-------------+   +-------------+
-  | AI / ML   |   | Clinical    |   | Real-Time   |
-  | Service   |   | Rule Engine |   | Monitoring  |
-  +-----+-----+   +-------------+   +------+------+
-        |                                  |
-        v                                  v
- Random Forest                         Socket.IO
-        |
-        v
-      SHAP
-```
+| Status | Description |
+|---|---|
+| Pending | Action is pending |
+| Compliant | Required action completed |
+| Partially Compliant | Action partially completed |
+| Non-Compliant | Required action not completed |
 
 ---
 
-# System Data Flow
-
-## Standard CRUD Flow
-
-```text
-User Action
-     |
-     v
-React Frontend
-     |
-     v
-API Request
-     |
-     v
-Backend Validation
-     |
-     v
-Business Logic
-     |
-     v
-PostgreSQL / Specialized Service
-     |
-     v
-JSON Response
-     |
-     v
-React Frontend
-```
-
----
-
-## AI Flow
-
-```text
-Patient Clinical Features
-          |
-          v
-Active Model
-          |
-          v
-Random Forest
-          |
-          v
-Risk Prediction
-          |
-          v
-Prediction Persistence
-          |
-          v
-SHAP Analysis
-          |
-          v
-Frontend Presentation
-```
-
----
-
-## Clinical Event Flow
-
-```text
-Monitoring / Prediction
-          |
-          v
-Clinical Rule
-          |
-          v
-Condition Evaluation
-          |
-          v
-Rule Execution
-          |
-          v
-Notification
-          |
-          v
-Real-Time Frontend Alert
-```
-
----
-
-# Database Design
-
-PostgreSQL is used as the central persistent relational database.
-
-## Core Application Data
-
-The database contains information related to:
-
-- Users and roles
-- Patients and demographics
-- Doctors and providers
-- Appointments
-- Billing
-- Treatments
-- Consents
-- Vitals
-- Predictions
-- Model versions
-- SHAP explanations
-
-## Milestone 3 Data
-
-- Clinical rules
-- Rule executions
-- Notifications
-- Monitoring summaries
-- Insight information
-
-## Milestone 4 Data
-
-- Outcome measurements
-- Provider collaborations
-- Collaboration notes
-- Clinical guidance
-- Guidance compliance
-
----
-
-## Database Engineering
-
-The database uses:
-
-- Primary keys
-- Foreign keys
-- Constraints
-- Indexes
-- Views
-- Triggers
-- SQL scripts
-- Separate schemas
-
-### Relational Integrity
-
-Primary keys uniquely identify records.
-
-Foreign keys connect related entities and help prevent orphaned references.
-
-Examples include:
-
-```text
-Patients
-   |
-   +---- Predictions
-   |         |
-   |         +---- Model Versions
-   |
-   +---- Rule Executions
-   |         |
-   |         +---- Clinical Rules
-   |
-   +---- Outcome Measurements
-   |
-   +---- Provider Collaborations
-             |
-             +---- Collaboration Notes
-```
-
----
-
-## Database Performance
-
-Indexes support frequent lookups such as:
-
-- `patient_id`
-- `status`
-- `rule_id`
-- Timestamps
-
-Views provide reusable summary queries.
-
-Triggers can maintain timestamp and update information.
-
-SQL scripts provide repeatable database setup and testing.
-
----
-
-# Synthea Synthetic Data
-
-The project uses **Synthea** to provide synthetic healthcare information for development and demonstration.
-
-Synthea data provides realistic healthcare relationships without depending on real patient records.
-
-Synthetic data is maintained separately from the core application data to support development and testing.
-
----
-
-# End-to-End Workflow
+## End-to-End Workflow
 
 The complete clinical workflow is:
 
-```text
-Patient Registration
-        |
-        v
-Appointment
-        |
-        v
-Clinical Encounter
-        |
-        v
-Vital Monitoring
-        |
-        v
-AI Risk Prediction
-        |
-        v
-SHAP Explanation
-        |
-        v
-Clinical Rule Evaluation
-        |
-        v
-Alert / Notification
-        |
-        v
-Clinical Guidance
-        |
-        v
-Provider Action
-        |
-        v
-Careplan / Intervention
-        |
-        v
-Follow-up Measurement
-        |
-        v
-Outcome Measurement
-        |
-        v
-Compliance Record
-```
+    Patient Registration
+            |
+            v
+       Appointment
+            |
+            v
+     Clinical Encounter
+            |
+            v
+      Vital Monitoring
+            |
+            v
+     AI Risk Prediction
+            |
+            v
+      SHAP Explanation
+            |
+            v
+    Clinical Rule Evaluation
+            |
+            v
+     Alert / Notification
+            |
+            v
+     Clinical Guidance
+            |
+            v
+      Provider Action
+            |
+            v
+    Careplan / Intervention
+            |
+            v
+    Follow-up Measurement
+            |
+            v
+    Outcome Measurement
+            |
+            v
+      Compliance Record
 
-### Operational Workflow
+### Complete Traceability
 
-```text
-Patient Registration
-        |
-        v
-Appointment
-        |
-        v
-Clinical Encounter
-        |
-        v
-Monitoring
-        |
-        v
-Prediction
-        |
-        v
-Rule Evaluation
-        |
-        v
-Alert
-        |
-        v
-Provider Action
-        |
-        v
-Careplan
-        |
-        v
-Follow-up
-        |
-        v
-Outcome
-```
-
-### Milestone 4 Traceability
-
-```text
-Clinical Rule Condition
-        |
-        v
-Clinical Guidance
-        |
-        v
-Provider Action
-        |
-        v
-Compliance Record
-        |
-        v
-Outcome Measurement
-```
-
-This creates a complete intervention trace rather than ending at alert generation.
+    Clinical Signal
+          |
+          v
+     AI Prediction
+          |
+          v
+    SHAP Explanation
+          |
+          v
+    Clinical Rule
+          |
+          v
+        Alert
+          |
+          v
+    Clinical Guidance
+          |
+          v
+    Provider Action
+          |
+          v
+      Compliance
+          |
+          v
+        Outcome
 
 ---
 
-# Development Milestones
+## Development Milestones
 
-## Milestone 1 — Core Healthcare Data Management
+### Milestone 1 — Core Healthcare Data Management
 
-### Features
+#### Features
 
 - Login and role-based access
 - Dashboard
@@ -893,15 +736,15 @@ This creates a complete intervention trace rather than ending at alert generatio
 - Core database constraints
 - Database views
 
-### Objective
+#### Objective
 
 Establish the core healthcare data and application foundation.
 
 ---
 
-## Milestone 2 — AI Prediction and Explainability
+### Milestone 2 — AI Prediction and Explainability
 
-### Features
+#### Features
 
 - Random Forest risk prediction
 - Model registration
@@ -910,15 +753,15 @@ Establish the core healthcare data and application foundation.
 - SHAP explanations
 - Flask AI REST service
 
-### Objective
+#### Objective
 
-Extend the platform with AI-based risk prediction and explainable AI.
+Extend the healthcare platform with AI-based risk prediction and explainable AI.
 
 ---
 
-## Milestone 3 — Clinical Rule Engine and Notifications
+### Milestone 3 — Clinical Rule Engine and Notifications
 
-### Features
+#### Features
 
 - Clinical rule configuration
 - Rule execution tracking
@@ -929,15 +772,15 @@ Extend the platform with AI-based risk prediction and explainable AI.
 - Insights
 - Reports
 
-### Objective
+#### Objective
 
 Convert clinical conditions into actionable alerts and real-time notifications.
 
 ---
 
-## Milestone 4 — Outcomes, Collaboration and Compliance
+### Milestone 4 — Outcomes, Collaboration and Compliance
 
-### Features
+#### Features
 
 - Outcome Measurement
 - Provider Collaboration
@@ -949,44 +792,15 @@ Convert clinical conditions into actionable alerts and real-time notifications.
 - Database indexes
 - Timestamp triggers
 
-### Objective
+#### Objective
 
 Extend the workflow from prediction and alerts to provider action, compliance, and measurable outcomes.
 
 ---
 
-# Technology Stack
+## API Endpoints
 
-| Layer | Technology | Purpose |
-|---|---|---|
-| Frontend | React.js | User interface |
-| Build Tool | Vite | Frontend development and build |
-| UI | Bootstrap / CSS | Styling |
-| API Client | Axios | API communication |
-| Routing | React Router | Application navigation |
-| Core Backend | Java 17 | Backend development |
-| Framework | Spring Boot | REST APIs and business logic |
-| Persistence | Spring Data JPA | Relational data access |
-| Security | Spring Security | Authentication and authorization support |
-| Specialized Backend | Node.js | Specialized workflow services |
-| Web Framework | Express.js | REST APIs |
-| Real-Time | Socket.IO / WebSocket | Live events and notifications |
-| AI Service | Python / Flask | Prediction and explainability APIs |
-| Machine Learning | Scikit-learn | Machine learning |
-| ML Algorithm | Random Forest | Patient risk prediction |
-| Explainability | SHAP | Feature contribution explanations |
-| Database | PostgreSQL | Persistent relational storage |
-| Synthetic Data | Synthea | Development healthcare data |
-| Streaming | Apache Kafka | Event streaming |
-| Administration | pgAdmin | Database management |
-| Testing | Postman | API testing |
-| Version Control | Git / GitHub | Source control |
-
----
-
-# API Endpoints
-
-## AI and Model Endpoints
+### AI and Model Endpoints
 
 | Method | Endpoint | Purpose |
 |---|---|---|
@@ -995,10 +809,10 @@ Extend the workflow from prediction and alerts to provider action, compliance, a
 | `POST` | `/models` | Register model metadata |
 | `PUT` | `/models/<id>/activate` | Activate selected model |
 | `PUT` | `/models/<id>/archive` | Archive model version |
-| `POST` | `/predict` | Generate and store patient prediction |
+| `POST` | `/predict` | Generate and store prediction |
 | `GET` | `/explain/<patient_id>` | Retrieve SHAP explanation |
 
-## Milestone 4 API Responsibilities
+### Milestone 4 API Responsibilities
 
 The Milestone 4 backend provides APIs for:
 
@@ -1008,66 +822,62 @@ The Milestone 4 backend provides APIs for:
 - Reading collaboration notes
 - Reading clinical guidance
 - Reading compliance status
-- Creating milestone 4 records
-- Updating milestone 4 records
+- Creating Milestone 4 records
+- Updating Milestone 4 records
 - Returning database results as JSON
 
 ---
 
-# Project Structure
+## Project Structure
 
 A typical integrated project structure is:
 
-```text
-Healthcare-Management-Platform/
-|
-+-- frontend/
-|   +-- src/
-|   +-- public/
-|   +-- package.json
-|   +-- ...
-|
-+-- backend/
-|   +-- src/
-|   +-- pom.xml
-|   +-- ...
-|
-+-- ml-service/
-|   +-- models/
-|   +-- app.py
-|   +-- requirements.txt
-|   +-- ...
-|
-+-- monitoring-service/
-|   +-- routes/
-|   +-- services/
-|   +-- package.json
-|   +-- ...
-|
-+-- database/
-|   +-- schema/
-|   +-- sql/
-|   +-- views/
-|   +-- triggers/
-|   +-- ...
-|
-+-- docs/
-|   +-- project documentation
-|
-+-- docker-compose.yml
-|
-+-- README.md
-|
-+-- .gitignore
-```
+    Healthcare-Management-Platform/
+    │
+    ├── frontend/
+    │   ├── src/
+    │   ├── public/
+    │   ├── package.json
+    │   └── ...
+    │
+    ├── backend/
+    │   ├── src/
+    │   ├── pom.xml
+    │   └── ...
+    │
+    ├── ml-service/
+    │   ├── models/
+    │   ├── app.py
+    │   ├── requirements.txt
+    │   └── ...
+    │
+    ├── monitoring-service/
+    │   ├── routes/
+    │   ├── services/
+    │   ├── package.json
+    │   └── ...
+    │
+    ├── database/
+    │   ├── schema/
+    │   ├── sql/
+    │   ├── views/
+    │   ├── triggers/
+    │   └── ...
+    │
+    ├── docs/
+    │   └── project documentation
+    │
+    ├── docker-compose.yml
+    ├── README.md
+    └── .gitignore
 
-> The exact directory names may vary depending on the final integrated repository structure.
+> **Note:** The exact directory names may vary depending on the final integrated repository structure.
 
 ---
 
-# Installation and Setup
+## Installation and Setup
 
-## Prerequisites
+### Prerequisites
 
 Install the following before running the project:
 
@@ -1081,18 +891,12 @@ Install the following before running the project:
 - Git
 - Apache Kafka, where required by event-streaming components
 
----
+### 1. Clone the Repository
 
-## 1. Clone the Repository
+    git clone <YOUR_GITHUB_REPOSITORY_URL>
+    cd <PROJECT_DIRECTORY>
 
-```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
-cd <PROJECT_DIRECTORY>
-```
-
----
-
-## 2. Configure PostgreSQL
+### 2. Configure PostgreSQL
 
 Create the required PostgreSQL database.
 
@@ -1100,133 +904,89 @@ Execute the database/schema SQL scripts provided in the repository.
 
 Configure the required database connection information:
 
-```text
-DB_HOST
-DB_PORT
-DB_NAME
-DB_USERNAME
-DB_PASSWORD
-```
+    DB_HOST
+    DB_PORT
+    DB_NAME
+    DB_USERNAME
+    DB_PASSWORD
 
-Keep database credentials and secrets in environment variables.
+> **Important:** Do not commit passwords, API keys, or other sensitive credentials to GitHub.
 
-Do not commit passwords, API keys, or other sensitive information to GitHub.
-
----
-
-## 3. Configure the Frontend
+### 3. Configure the Frontend
 
 Navigate to the frontend directory:
 
-```bash
-cd frontend
-```
+    cd frontend
 
 Install dependencies:
 
-```bash
-npm install
-```
+    npm install
 
 Start the development server:
 
-```bash
-npm run dev
-```
+    npm run dev
 
-The frontend communicates with backend services through documented APIs instead of directly accessing PostgreSQL.
+The frontend communicates with backend services through REST APIs.
 
----
-
-## 4. Configure the Spring Boot Backend
+### 4. Configure the Spring Boot Backend
 
 Navigate to the backend directory:
 
-```bash
-cd backend
-```
+    cd backend
 
 Build the project:
 
-```bash
-mvn clean install
-```
+    mvn clean install
 
 Run the Spring Boot application:
 
-```bash
-mvn spring-boot:run
-```
+    mvn spring-boot:run
 
 Configure the PostgreSQL connection according to the backend environment configuration.
 
----
+### 5. Configure the Node.js / Express Service
 
-## 5. Configure the Node.js / Express Service
+Navigate to the required Node.js service:
 
-Navigate to the required Node.js service directory:
-
-```bash
-cd <NODE_SERVICE_DIRECTORY>
-```
+    cd <NODE_SERVICE_DIRECTORY>
 
 Install dependencies:
 
-```bash
-npm install
-```
+    npm install
 
 Start the service:
 
-```bash
-npm start
-```
+    npm start
 
 The Milestone 4 Node.js/Express backend is configured to use:
 
-```text
-Port: 4001
-```
+    Port: 4001
 
----
-
-## 6. Configure the AI/ML Service
+### 6. Configure the AI/ML Service
 
 Navigate to the AI/ML service:
 
-```bash
-cd ml-service
-```
+    cd ml-service
 
 Create a Python virtual environment:
 
-```bash
-python -m venv venv
-```
+    python -m venv venv
 
-### Windows
+#### Windows
 
-```bash
-venv\Scripts\activate
-```
+    venv\Scripts\activate
 
-### Linux / macOS
+#### Linux / macOS
 
-```bash
-source venv/bin/activate
-```
+    source venv/bin/activate
 
-Install Python dependencies:
+Install dependencies:
 
-```bash
-pip install -r requirements.txt
-```
+    pip install -r requirements.txt
 
 Start the Flask service using the configured application entry point.
 
----
-
-## 7. Configure Apache Kafka
+### 7. Configure Apache Kafka
 
 Apache Kafka provides the event-streaming foundation for the project.
 
@@ -1234,37 +994,35 @@ Ensure Kafka is running before starting components that depend on Kafka event st
 
 ---
 
-# Running the Project
+## Running the Project
 
 A typical startup sequence is:
 
-```text
-1. Start PostgreSQL
-        |
-        v
-2. Start Apache Kafka if required
-        |
-        v
-3. Start Spring Boot Backend
-        |
-        v
-4. Start Node.js / Express Services
-        |
-        v
-5. Start Python / Flask AI Service
-        |
-        v
-6. Start React Frontend
-        |
-        v
-7. Open the application in the browser
-```
+    1. Start PostgreSQL
+            |
+            v
+    2. Start Apache Kafka
+            |
+            v
+    3. Start Spring Boot Backend
+            |
+            v
+    4. Start Node.js / Express Services
+            |
+            v
+    5. Start Python / Flask AI Service
+            |
+            v
+    6. Start React Frontend
+            |
+            v
+    7. Open the Application
 
 The exact commands may vary depending on the final integrated repository configuration.
 
 ---
 
-# Testing
+## Testing
 
 The project uses multiple testing levels.
 
@@ -1277,9 +1035,7 @@ The project uses multiple testing levels.
 | API Testing | Validate API behavior | Requests, responses, status codes |
 | Workflow Testing | Validate complete clinical flow | Patient → Prediction → Rule → Alert → Outcome |
 
----
-
-## API Testing
+### API Testing
 
 **Postman** can be used to test REST APIs.
 
@@ -1292,9 +1048,7 @@ Testing can include:
 - API error handling
 - Backend functionality
 
----
-
-## Database Testing
+### Database Testing
 
 **pgAdmin** can be used to verify:
 
@@ -1310,7 +1064,7 @@ Testing can include:
 
 ---
 
-# Security and Privacy
+## Security and Privacy
 
 The platform includes security-oriented practices such as:
 
@@ -1339,7 +1093,7 @@ Any future deployment using real patient information would require appropriate:
 
 ---
 
-# Project Results
+## Results
 
 The project integrates:
 
@@ -1354,32 +1108,30 @@ The project integrates:
 - SHAP explainability
 - Clinical rules
 - Real-time notifications
-- Careplan management
+- Careplans
 - Outcome measurement
 - Provider collaboration
 - Clinical-guidance compliance
 
-The project progressively extends the platform through four milestones:
+### Overall Progression
 
-```text
-Healthcare Data Management
-          |
-          v
-AI Risk Prediction
-          |
-          v
-Clinical Rules and Notifications
-          |
-          v
-Provider Action
-          |
-          v
-Outcome Measurement
-```
+    Healthcare Data Management
+              |
+              v
+       AI Risk Prediction
+              |
+              v
+    Clinical Rules and Notifications
+              |
+              v
+        Provider Action
+              |
+              v
+       Outcome Measurement
 
 ---
 
-# Testing and Validation Results
+## Testing and Validation Results
 
 The following core modules were validated during project development:
 
@@ -1392,20 +1144,19 @@ The following core modules were validated during project development:
 - Vital Monitoring
 - Patient 360
 
-Milestone 3 and Milestone 4 validation included:
+### Milestone 3 and 4 Validation
 
-- Rule execution persistence
-- Notification storage
-- Real-time notification delivery
-- Outcome record persistence
-- Provider collaboration records
-- Collaboration notes
-- Clinical guidance compliance
-- Action and remarks persistence
+- Rule execution records can be persisted.
+- Notifications can be stored.
+- Notifications can be delivered in real time.
+- Outcome records retain patient and clinical context.
+- Provider collaboration records can be stored.
+- Collaboration notes can be stored.
+- Guidance compliance can preserve actions and remarks.
 
 ---
 
-# Limitations
+## Limitations
 
 The current project has the following limitations:
 
@@ -1419,9 +1170,9 @@ The current project has the following limitations:
 
 ---
 
-# Future Enhancements
+## Future Enhancements
 
-## Technical Enhancements
+### Technical Enhancements
 
 - Cloud deployment
 - Containerized production deployment
@@ -1433,7 +1184,7 @@ The current project has the following limitations:
 - Improved API documentation
 - Automated testing
 
-## Healthcare Enhancements
+### Healthcare Enhancements
 
 - Hospital Information System integration
 - Healthcare interoperability standards
@@ -1445,7 +1196,7 @@ The current project has the following limitations:
 - Expanded clinical reporting
 - Data export capabilities
 
-## AI Enhancements
+### AI Enhancements
 
 - Additional risk-prediction models
 - Model performance monitoring
@@ -1458,61 +1209,57 @@ The current project has the following limitations:
 
 ---
 
-# Demonstration Flow
+## Demonstration Flow
 
 The recommended project demonstration sequence is:
 
-```text
-1. Login
-      |
-      v
-2. Dashboard
-      |
-      v
-3. Patients
-      |
-      v
-4. Patient 360
-      |
-      v
-5. Appointments
-      |
-      v
-6. Predictions
-      |
-      v
-7. SHAP Explainability
-      |
-      v
-8. Alerts
-      |
-      v
-9. Monitoring / Insights
-      |
-      v
-10. Careplans
-      |
-      v
-11. Outcome Measurement
-      |
-      v
-12. Provider Collaboration
-      |
-      v
-13. Guideline Compliance
-      |
-      v
-14. PostgreSQL / pgAdmin
-      |
-      v
-15. End-to-End Patient Trace
-```
-
-The main demonstration narrative follows a patient from clinical data through risk prediction, explanation, clinical rule evaluation, alert generation, provider action, and outcome measurement.
+    1. Login
+          |
+          v
+    2. Dashboard
+          |
+          v
+    3. Patients
+          |
+          v
+    4. Patient 360
+          |
+          v
+    5. Appointments
+          |
+          v
+    6. Predictions
+          |
+          v
+    7. SHAP Explainability
+          |
+          v
+    8. Alerts
+          |
+          v
+    9. Monitoring / Insights
+          |
+          v
+    10. Careplans
+          |
+          v
+    11. Outcome Measurement
+          |
+          v
+    12. Provider Collaboration
+          |
+          v
+    13. Guideline Compliance
+          |
+          v
+    14. PostgreSQL / pgAdmin
+          |
+          v
+    15. End-to-End Patient Trace
 
 ---
 
-# Team
+## 👥 Team
 
 | Team Member | Role |
 |---|---|
@@ -1525,7 +1272,7 @@ The main demonstration narrative follows a patient from clinical data through ri
 
 ---
 
-# Project Information
+## Project Information
 
 | Category | Details |
 |---|---|
@@ -1550,38 +1297,7 @@ The main demonstration narrative follows a patient from clinical data through ri
 
 ---
 
-# Project Highlights
-
-```text
-Healthcare Management
-Patient 360
-Patient Management
-Appointment Management
-Consent Management
-Vital Monitoring
-AI-Based Risk Prediction
-Random Forest
-Explainable AI with SHAP
-ML Model Versioning
-Clinical Rule Engine
-Real-Time Notifications
-Careplan Management
-Outcome Measurement
-Provider Collaboration
-Clinical Guidance Compliance
-PostgreSQL
-Apache Kafka
-Socket.IO
-React + Vite
-Spring Boot
-Node.js + Express
-Python + Flask
-Synthea Synthetic Data
-```
-
----
-
-# Documentation
+## Documentation
 
 The complete project documentation covers:
 
@@ -1620,7 +1336,7 @@ The complete project documentation covers:
 
 ---
 
-# Acknowledgement
+## 🙏 Acknowledgement
 
 We sincerely thank **Infosys Springboard** for providing the opportunity to work on an industry-oriented healthcare technology project.
 
@@ -1640,7 +1356,7 @@ We also acknowledge the combined contribution of all six team members across fro
 
 ---
 
-# Disclaimer
+## Disclaimer
 
 This project is developed for **academic, educational, and demonstration purposes**.
 
@@ -1652,7 +1368,7 @@ The project uses synthetic healthcare data for development and demonstration.
 
 ---
 
-# License
+## 📄 License
 
 This project was developed as an academic/project implementation under the **Infosys Springboard** program.
 
@@ -1666,6 +1382,8 @@ The project is intended for educational and demonstration purposes.
 
 ---
 
-## Healthcare Management Platform for Clinical Operations
+<h3 align="center">Healthcare Management Platform for Clinical Operations</h3>
 
-**Infosys Springboard Team Project**
+<p align="center">
+  <strong>Infosys Springboard Team Project</strong>
+</p>
